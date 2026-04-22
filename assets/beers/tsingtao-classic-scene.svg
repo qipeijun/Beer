@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="960" height="640" viewBox="0 0 960 640" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="scene" x1="80" y1="52" x2="780" y2="560" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f8ca46" />
+      <stop offset="1" stop-color="#f49a36" />
+    </linearGradient>
+  </defs>
+  <rect x="20" y="20" width="920" height="600" rx="42" fill="url(#scene)"/>
+  <rect x="84" y="110" width="792" height="368" rx="28" fill="rgba(255,255,255,0.14)"/>
+  <rect x="120" y="420" width="720" height="30" rx="15" fill="rgba(34,24,18,0.18)"/>
+  <circle cx="224" cy="268" r="88" fill="rgba(255,255,255,0.18)"/>
+  <circle cx="736" cy="220" r="58" fill="rgba(255,255,255,0.15)"/>
+  <text x="120" y="170" font-size="44" fill="#fff" font-family="Arial, sans-serif" font-weight="700">青岛啤酒 经典10度</text>
+  <text x="120" y="224" font-size="22" fill="rgba(255,255,255,0.9)" font-family="Arial, sans-serif">经典10度的优势不是复杂，而是稳定的清爽感和熟悉的麦香底。天气热、菜很重、朋友很多的时候，它是那种几乎不会出错的开场酒。</text>
+  <text x="120" y="528" font-size="22" fill="#fff" font-family="Arial, sans-serif">适饮温度 4-6°C · 推荐搭配 烧烤 · 海鲜 · 炸物</text>
+  <text x="120" y="566" font-size="18" fill="rgba(255,255,255,0.86)" font-family="Arial, sans-serif">拉格的优势是干净、利落、好搭餐，冰到位以后非常适合夏天大口喝。</text>
+</svg>

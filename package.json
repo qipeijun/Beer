@@ -1,0 +1,14 @@
+{
+  "name": "beer-summer-guide",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "npm run build:browser-app && npm run build:browser-data",
+    "build:browser-app": "node scripts/build-browser-app.mjs",
+    "build:browser-data": "node scripts/build-browser-data.mjs",
+    "build:image-search": "node scripts/build-image-search-queries.mjs",
+    "generate:art": "node scripts/generate-beer-art.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "verify": "npm run build && npm test"
+  }
+}

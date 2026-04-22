@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="960" height="640" viewBox="0 0 960 640" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="scene" x1="80" y1="52" x2="780" y2="560" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4a3428" />
+      <stop offset="1" stop-color="#1d1716" />
+    </linearGradient>
+  </defs>
+  <rect x="20" y="20" width="920" height="600" rx="42" fill="url(#scene)"/>
+  <rect x="84" y="110" width="792" height="368" rx="28" fill="rgba(255,255,255,0.14)"/>
+  <rect x="120" y="420" width="720" height="30" rx="15" fill="rgba(34,24,18,0.18)"/>
+  <circle cx="224" cy="268" r="88" fill="rgba(255,255,255,0.18)"/>
+  <circle cx="736" cy="220" r="58" fill="rgba(255,255,255,0.15)"/>
+  <text x="120" y="170" font-size="44" fill="#fff" font-family="Arial, sans-serif" font-weight="700">健力士 Draught</text>
+  <text x="120" y="224" font-size="22" fill="rgba(255,255,255,0.9)" font-family="Arial, sans-serif">健力士最吸引人的并不是高度，而是氮气感带来的绵密口感和烘焙风味。配汉堡、烤肉或宵夜比单喝更能感受到它的优势。</text>
+  <text x="120" y="528" font-size="22" fill="#fff" font-family="Arial, sans-serif">适饮温度 8-10°C · 推荐搭配 汉堡 · 烤肉 · 巧克力甜品</text>
+  <text x="120" y="566" font-size="18" fill="rgba(255,255,255,0.86)" font-family="Arial, sans-serif">世涛偏向烘焙、咖啡和黑巧方向，夏天更适合夜晚慢饮，而不是纯解暑路线。</text>
+</svg>

@@ -1,0 +1,842 @@
+[
+  {
+    "id": "tsingtao-classic",
+    "brand": "青岛啤酒",
+    "name": "经典10度",
+    "country": "中国",
+    "style": "拉格",
+    "priority": "high",
+    "searchMethods": {
+      "wikimedia_file_search": [
+        "site:commons.wikimedia.org/wiki/File: \"青岛啤酒 经典10度\" beer",
+        "site:commons.wikimedia.org/wiki/File: \"青岛啤酒 经典10度\" bottle",
+        "site:commons.wikimedia.org/wiki/File: \"青岛啤酒 经典10度\" can"
+      ],
+      "wikimedia_category_search": [
+        "site:commons.wikimedia.org/wiki/Category: \"青岛啤酒\" beer",
+        "site:commons.wikimedia.org \"青岛啤酒 经典10度\" Wikimedia Commons",
+        "site:commons.wikimedia.org \"中国 beer 经典10度\" Commons"
+      ],
+      "official_brand_asset_search": [
+        "\"青岛啤酒 经典10度\" official product image",
+        "\"青岛啤酒 经典10度\" media kit bottle png",
+        "\"青岛啤酒\" 官方 产品图 啤酒"
+      ],
+      "structured_open_data_search": [
+        "\"青岛啤酒 经典10度\" Wikidata image",
+        "\"青岛啤酒 经典10度\" Open Food Facts beer",
+        "\"青岛啤酒 经典10度\" Wikipedia bottle image"
+      ],
+      "retail_reference_search": [
+        "\"青岛啤酒 经典10度\" can bottle packshot",
+        "\"青岛啤酒\" 经典10度 电商 图",
+        "\"青岛啤酒 经典10度\" bottle transparent png"
+      ]
+    }
+  },
+  {
+    "id": "snow-brave",
+    "brand": "雪花",
+    "name": "勇闯天涯 SuperX",
+    "country": "中国",
+    "style": "拉格",
+    "priority": "high",
+    "searchMethods": {
+      "wikimedia_file_search": [
+        "site:commons.wikimedia.org/wiki/File: \"雪花 勇闯天涯 SuperX\" beer",
+        "site:commons.wikimedia.org/wiki/File: \"雪花 勇闯天涯 SuperX\" bottle",
+        "site:commons.wikimedia.org/wiki/File: \"雪花 勇闯天涯 SuperX\" can"
+      ],
+      "wikimedia_category_search": [
+        "site:commons.wikimedia.org/wiki/Category: \"雪花\" beer",
+        "site:commons.wikimedia.org \"雪花 勇闯天涯 SuperX\" Wikimedia Commons",
+        "site:commons.wikimedia.org \"中国 beer 勇闯天涯 SuperX\" Commons"
+      ],
+      "official_brand_asset_search": [
+        "\"雪花 勇闯天涯 SuperX\" official product image",
+        "\"雪花 勇闯天涯 SuperX\" media kit bottle png",
+        "\"雪花\" 官方 产品图 啤酒"
+      ],
+      "structured_open_data_search": [
+        "\"雪花 勇闯天涯 SuperX\" Wikidata image",
+        "\"雪花 勇闯天涯 SuperX\" Open Food Facts beer",
+        "\"雪花 勇闯天涯 SuperX\" Wikipedia bottle image"
+      ],
+      "retail_reference_search": [
+        "\"雪花 勇闯天涯 SuperX\" can bottle packshot",
+        "\"雪花\" 勇闯天涯 SuperX 电商 图",
+        "\"雪花 勇闯天涯 SuperX\" bottle transparent png"
+      ]
+    }
+  },
+  {
+    "id": "harbin-ice-pure",
+    "brand": "哈尔滨啤酒",
+    "name": "冰纯",
+    "country": "中国",
+    "style": "拉格",
+    "priority": "high",
+    "searchMethods": {
+      "wikimedia_file_search": [
+        "site:commons.wikimedia.org/wiki/File: \"哈尔滨啤酒 冰纯\" beer",
+        "site:commons.wikimedia.org/wiki/File: \"哈尔滨啤酒 冰纯\" bottle",
+        "site:commons.wikimedia.org/wiki/File: \"哈尔滨啤酒 冰纯\" can"
+      ],
+      "wikimedia_category_search": [
+        "site:commons.wikimedia.org/wiki/Category: \"哈尔滨啤酒\" beer",
+        "site:commons.wikimedia.org \"哈尔滨啤酒 冰纯\" Wikimedia Commons",
+        "site:commons.wikimedia.org \"中国 beer 冰纯\" Commons"
+      ],
+      "official_brand_asset_search": [
+        "\"哈尔滨啤酒 冰纯\" official product image",
+        "\"哈尔滨啤酒 冰纯\" media kit bottle png",
+        "\"哈尔滨啤酒\" 官方 产品图 啤酒"
+      ],
+      "structured_open_data_search": [
+        "\"哈尔滨啤酒 冰纯\" Wikidata image",
+        "\"哈尔滨啤酒 冰纯\" Open Food Facts beer",
+        "\"哈尔滨啤酒 冰纯\" Wikipedia bottle image"
+      ],
+      "retail_reference_search": [
+        "\"哈尔滨啤酒 冰纯\" can bottle packshot",
+        "\"哈尔滨啤酒\" 冰纯 电商 图",
+        "\"哈尔滨啤酒 冰纯\" bottle transparent png"
+      ]
+    }
+  },
+  {
+    "id": "yanjing-u8",
+    "brand": "燕京",
+    "name": "U8",
+    "country": "中国",
+    "style": "拉格",
+    "priority": "high",
+    "searchMethods": {
+      "wikimedia_file_search": [
+        "site:commons.wikimedia.org/wiki/File: \"燕京 U8\" beer",
+        "site:commons.wikimedia.org/wiki/File: \"燕京 U8\" bottle",
+        "site:commons.wikimedia.org/wiki/File: \"燕京 U8\" can"
+      ],
+      "wikimedia_category_search": [
+        "site:commons.wikimedia.org/wiki/Category: \"燕京\" beer",
+        "site:commons.wikimedia.org \"燕京 U8\" Wikimedia Commons",
+        "site:commons.wikimedia.org \"中国 beer U8\" Commons"
+      ],
+      "official_brand_asset_search": [
+        "\"燕京 U8\" official product image",
+        "\"燕京 U8\" media kit bottle png",
+        "\"燕京\" 官方 产品图 啤酒"
+      ],
+      "structured_open_data_search": [
+        "\"燕京 U8\" Wikidata image",
+        "\"燕京 U8\" Open Food Facts beer",
+        "\"燕京 U8\" Wikipedia bottle image"
+      ],
+      "retail_reference_search": [
+        "\"燕京 U8\" can bottle packshot",
+        "\"燕京\" U8 电商 图",
+        "\"燕京 U8\" bottle transparent png"
+      ]
+    }
+  },
+  {
+    "id": "vedett-extra-white",
+    "brand": "白熊",
+    "name": "Extra White",
+    "country": "比利时",
+    "style": "小麦啤",
+    "priority": "high",
+    "searchMethods": {
+      "wikimedia_file_search": [
+        "site:commons.wikimedia.org/wiki/File: \"白熊 Extra White\" beer",
+        "site:commons.wikimedia.org/wiki/File: \"白熊 Extra White\" bottle",
+        "site:commons.wikimedia.org/wiki/File: \"Vedett Extra White\" can"
+      ],
+      "wikimedia_category_search": [
+        "site:commons.wikimedia.org/wiki/Category: \"白熊\" beer",
+        "site:commons.wikimedia.org \"白熊 Extra White\" Wikimedia Commons",
+        "site:commons.wikimedia.org \"比利时 beer Extra White\" Commons"
+      ],
+      "official_brand_asset_search": [
+        "\"白熊 Extra White\" official product image",
+        "\"白熊 Extra White\" media kit bottle png",
+        "\"白熊\" 官方 产品图 啤酒"
+      ],
+      "structured_open_data_search": [
+        "\"白熊 Extra White\" Wikidata image",
+        "\"白熊 Extra White\" Open Food Facts beer",
+        "\"白熊 Extra White\" Wikipedia bottle image"
+      ],
+      "retail_reference_search": [
+        "\"白熊 Extra White\" can bottle packshot",
+        "\"白熊\" Extra White 电商 图",
+        "\"白熊 Extra White\" bottle transparent png"
+      ]
+    }
+  },
+  {
+    "id": "leffe-blonde",
+    "brand": "乐飞",
+    "name": "金啤",
+    "country": "比利时",
+    "style": "修道院啤酒",
+    "priority": "high",
+    "searchMethods": {
+      "wikimedia_file_search": [
+        "site:commons.wikimedia.org/wiki/File: \"乐飞 金啤\" beer",
+        "site:commons.wikimedia.org/wiki/File: \"乐飞 金啤\" bottle",
+        "site:commons.wikimedia.org/wiki/File: \"Leffe Blonde\" can"
+      ],
+      "wikimedia_category_search": [
+        "site:commons.wikimedia.org/wiki/Category: \"乐飞\" beer",
+        "site:commons.wikimedia.org \"乐飞 金啤\" Wikimedia Commons",
+        "site:commons.wikimedia.org \"比利时 beer 金啤\" Commons"
+      ],
+      "official_brand_asset_search": [
+        "\"乐飞 金啤\" official product image",
+        "\"乐飞 金啤\" media kit bottle png",
+        "\"乐飞\" 官方 产品图 啤酒"
+      ],
+      "structured_open_data_search": [
+        "\"乐飞 金啤\" Wikidata image",
+        "\"乐飞 金啤\" Open Food Facts beer",
+        "\"乐飞 金啤\" Wikipedia bottle image"
+      ],
+      "retail_reference_search": [
+        "\"乐飞 金啤\" can bottle packshot",
+        "\"乐飞\" 金啤 电商 图",
+        "\"乐飞 金啤\" bottle transparent png"
+      ]
+    }
+  },
+  {
+    "id": "chimay-blue",
+    "brand": "智美",
+    "name": "蓝帽",
+    "country": "比利时",
+    "style": "修道院啤酒",
+    "priority": "high",
+    "searchMethods": {
+      "wikimedia_file_search": [
+        "site:commons.wikimedia.org/wiki/File: \"智美 蓝帽\" beer",
+        "site:commons.wikimedia.org/wiki/File: \"智美 蓝帽\" bottle",
+        "site:commons.wikimedia.org/wiki/File: \"智美 蓝帽\" can"
+      ],
+      "wikimedia_category_search": [
+        "site:commons.wikimedia.org/wiki/Category: \"智美\" beer",
+        "site:commons.wikimedia.org \"智美 蓝帽\" Wikimedia Commons",
+        "site:commons.wikimedia.org \"比利时 beer 蓝帽\" Commons"
+      ],
+      "official_brand_asset_search": [
+        "\"智美 蓝帽\" official product image",
+        "\"智美 蓝帽\" media kit bottle png",
+        "\"智美\" 官方 产品图 啤酒"
+      ],
+      "structured_open_data_search": [
+        "\"智美 蓝帽\" Wikidata image",
+        "\"智美 蓝帽\" Open Food Facts beer",
+        "\"智美 蓝帽\" Wikipedia bottle image"
+      ],
+      "retail_reference_search": [
+        "\"智美 蓝帽\" can bottle packshot",
+        "\"智美\" 蓝帽 电商 图",
+        "\"智美 蓝帽\" bottle transparent png"
+      ]
+    }
+  },
+  {
+    "id": "franziskaner-hefe",
+    "brand": "教士",
+    "name": "小麦白啤",
+    "country": "德国",
+    "style": "小麦啤",
+    "priority": "high",
+    "searchMethods": {
+      "wikimedia_file_search": [
+        "site:commons.wikimedia.org/wiki/File: \"教士 小麦白啤\" beer",
+        "site:commons.wikimedia.org/wiki/File: \"教士 小麦白啤\" bottle",
+        "site:commons.wikimedia.org/wiki/File: \"Franziskaner Hefe Weissbier\" can"
+      ],
+      "wikimedia_category_search": [
+        "site:commons.wikimedia.org/wiki/Category: \"教士\" beer",
+        "site:commons.wikimedia.org \"教士 小麦白啤\" Wikimedia Commons",
+        "site:commons.wikimedia.org \"德国 beer 小麦白啤\" Commons"
+      ],
+      "official_brand_asset_search": [
+        "\"教士 小麦白啤\" official product image",
+        "\"教士 小麦白啤\" media kit bottle png",
+        "\"教士\" 官方 产品图 啤酒"
+      ],
+      "structured_open_data_search": [
+        "\"教士 小麦白啤\" Wikidata image",
+        "\"教士 小麦白啤\" Open Food Facts beer",
+        "\"教士 小麦白啤\" Wikipedia bottle image"
+      ],
+      "retail_reference_search": [
+        "\"教士 小麦白啤\" can bottle packshot",
+        "\"教士\" 小麦白啤 电商 图",
+        "\"教士 小麦白啤\" bottle transparent png"
+      ]
+    }
+  },
+  {
+    "id": "weihenstephaner-hefe",
+    "brand": "唯森",
+    "name": "小麦白啤",
+    "country": "德国",
+    "style": "小麦啤",
+    "priority": "high",
+    "searchMethods": {
+      "wikimedia_file_search": [
+        "site:commons.wikimedia.org/wiki/File: \"唯森 小麦白啤\" beer",
+        "site:commons.wikimedia.org/wiki/File: \"唯森 小麦白啤\" bottle",
+        "site:commons.wikimedia.org/wiki/File: \"Weihenstephaner Hefeweissbier\" can"
+      ],
+      "wikimedia_category_search": [
+        "site:commons.wikimedia.org/wiki/Category: \"唯森\" beer",
+        "site:commons.wikimedia.org \"唯森 小麦白啤\" Wikimedia Commons",
+        "site:commons.wikimedia.org \"德国 beer 小麦白啤\" Commons"
+      ],
+      "official_brand_asset_search": [
+        "\"唯森 小麦白啤\" official product image",
+        "\"唯森 小麦白啤\" media kit bottle png",
+        "\"唯森\" 官方 产品图 啤酒"
+      ],
+      "structured_open_data_search": [
+        "\"唯森 小麦白啤\" Wikidata image",
+        "\"唯森 小麦白啤\" Open Food Facts beer",
+        "\"唯森 小麦白啤\" Wikipedia bottle image"
+      ],
+      "retail_reference_search": [
+        "\"唯森 小麦白啤\" can bottle packshot",
+        "\"唯森\" 小麦白啤 电商 图",
+        "\"唯森 小麦白啤\" bottle transparent png"
+      ]
+    }
+  },
+  {
+    "id": "bitburger-pils",
+    "brand": "贝克格",
+    "name": "Bitburger Pils",
+    "country": "德国",
+    "style": "皮尔森",
+    "priority": "high",
+    "searchMethods": {
+      "wikimedia_file_search": [
+        "site:commons.wikimedia.org/wiki/File: \"贝克格 Bitburger Pils\" beer",
+        "site:commons.wikimedia.org/wiki/File: \"贝克格 Bitburger Pils\" bottle",
+        "site:commons.wikimedia.org/wiki/File: \"Bitburger Pils\" can"
+      ],
+      "wikimedia_category_search": [
+        "site:commons.wikimedia.org/wiki/Category: \"贝克格\" beer",
+        "site:commons.wikimedia.org \"贝克格 Bitburger Pils\" Wikimedia Commons",
+        "site:commons.wikimedia.org \"德国 beer Bitburger Pils\" Commons"
+      ],
+      "official_brand_asset_search": [
+        "\"贝克格 Bitburger Pils\" official product image",
+        "\"贝克格 Bitburger Pils\" media kit bottle png",
+        "\"贝克格\" 官方 产品图 啤酒"
+      ],
+      "structured_open_data_search": [
+        "\"贝克格 Bitburger Pils\" Wikidata image",
+        "\"贝克格 Bitburger Pils\" Open Food Facts beer",
+        "\"贝克格 Bitburger Pils\" Wikipedia bottle image"
+      ],
+      "retail_reference_search": [
+        "\"贝克格 Bitburger Pils\" can bottle packshot",
+        "\"贝克格\" Bitburger Pils 电商 图",
+        "\"贝克格 Bitburger Pils\" bottle transparent png"
+      ]
+    }
+  },
+  {
+    "id": "brewdog-punk-ipa",
+    "brand": "酿酒狗",
+    "name": "Punk IPA",
+    "country": "英国",
+    "style": "IPA",
+    "priority": "medium",
+    "searchMethods": {
+      "wikimedia_file_search": [
+        "site:commons.wikimedia.org/wiki/File: \"酿酒狗 Punk IPA\" beer",
+        "site:commons.wikimedia.org/wiki/File: \"酿酒狗 Punk IPA\" bottle",
+        "site:commons.wikimedia.org/wiki/File: \"酿酒狗 Punk IPA\" can"
+      ],
+      "wikimedia_category_search": [
+        "site:commons.wikimedia.org/wiki/Category: \"酿酒狗\" beer",
+        "site:commons.wikimedia.org \"酿酒狗 Punk IPA\" Wikimedia Commons",
+        "site:commons.wikimedia.org \"英国 beer Punk IPA\" Commons"
+      ],
+      "official_brand_asset_search": [
+        "\"酿酒狗 Punk IPA\" official product image",
+        "\"酿酒狗 Punk IPA\" media kit bottle png",
+        "\"酿酒狗\" 官方 产品图 啤酒"
+      ],
+      "structured_open_data_search": [
+        "\"酿酒狗 Punk IPA\" Wikidata image",
+        "\"酿酒狗 Punk IPA\" Open Food Facts beer",
+        "\"酿酒狗 Punk IPA\" Wikipedia bottle image"
+      ],
+      "retail_reference_search": [
+        "\"酿酒狗 Punk IPA\" can bottle packshot",
+        "\"酿酒狗\" Punk IPA 电商 图",
+        "\"酿酒狗 Punk IPA\" bottle transparent png"
+      ]
+    }
+  },
+  {
+    "id": "fullers-london-pride",
+    "brand": "富乐",
+    "name": "London Pride",
+    "country": "英国",
+    "style": "英式艾尔",
+    "priority": "medium",
+    "searchMethods": {
+      "wikimedia_file_search": [
+        "site:commons.wikimedia.org/wiki/File: \"富乐 London Pride\" beer",
+        "site:commons.wikimedia.org/wiki/File: \"富乐 London Pride\" bottle",
+        "site:commons.wikimedia.org/wiki/File: \"Fuller's London Pride\" can"
+      ],
+      "wikimedia_category_search": [
+        "site:commons.wikimedia.org/wiki/Category: \"富乐\" beer",
+        "site:commons.wikimedia.org \"富乐 London Pride\" Wikimedia Commons",
+        "site:commons.wikimedia.org \"英国 beer London Pride\" Commons"
+      ],
+      "official_brand_asset_search": [
+        "\"富乐 London Pride\" official product image",
+        "\"富乐 London Pride\" media kit bottle png",
+        "\"富乐\" 官方 产品图 啤酒"
+      ],
+      "structured_open_data_search": [
+        "\"富乐 London Pride\" Wikidata image",
+        "\"富乐 London Pride\" Open Food Facts beer",
+        "\"富乐 London Pride\" Wikipedia bottle image"
+      ],
+      "retail_reference_search": [
+        "\"富乐 London Pride\" can bottle packshot",
+        "\"富乐\" London Pride 电商 图",
+        "\"富乐 London Pride\" bottle transparent png"
+      ]
+    }
+  },
+  {
+    "id": "goose-island-ipa",
+    "brand": "鹅岛",
+    "name": "IPA",
+    "country": "美国",
+    "style": "IPA",
+    "priority": "high",
+    "searchMethods": {
+      "wikimedia_file_search": [
+        "site:commons.wikimedia.org/wiki/File: \"鹅岛 IPA\" beer",
+        "site:commons.wikimedia.org/wiki/File: \"鹅岛 IPA\" bottle",
+        "site:commons.wikimedia.org/wiki/File: \"鹅岛 IPA\" can"
+      ],
+      "wikimedia_category_search": [
+        "site:commons.wikimedia.org/wiki/Category: \"鹅岛\" beer",
+        "site:commons.wikimedia.org \"鹅岛 IPA\" Wikimedia Commons",
+        "site:commons.wikimedia.org \"美国 beer IPA\" Commons"
+      ],
+      "official_brand_asset_search": [
+        "\"鹅岛 IPA\" official product image",
+        "\"鹅岛 IPA\" media kit bottle png",
+        "\"鹅岛\" 官方 产品图 啤酒"
+      ],
+      "structured_open_data_search": [
+        "\"鹅岛 IPA\" Wikidata image",
+        "\"鹅岛 IPA\" Open Food Facts beer",
+        "\"鹅岛 IPA\" Wikipedia bottle image"
+      ],
+      "retail_reference_search": [
+        "\"鹅岛 IPA\" can bottle packshot",
+        "\"鹅岛\" IPA 电商 图",
+        "\"鹅岛 IPA\" bottle transparent png"
+      ]
+    }
+  },
+  {
+    "id": "sierra-nevada-pale-ale",
+    "brand": "内华达山脉",
+    "name": "Pale Ale",
+    "country": "美国",
+    "style": "美式淡色艾尔",
+    "priority": "high",
+    "searchMethods": {
+      "wikimedia_file_search": [
+        "site:commons.wikimedia.org/wiki/File: \"内华达山脉 Pale Ale\" beer",
+        "site:commons.wikimedia.org/wiki/File: \"内华达山脉 Pale Ale\" bottle",
+        "site:commons.wikimedia.org/wiki/File: \"Sierra Nevada Pale Ale\" can"
+      ],
+      "wikimedia_category_search": [
+        "site:commons.wikimedia.org/wiki/Category: \"内华达山脉\" beer",
+        "site:commons.wikimedia.org \"内华达山脉 Pale Ale\" Wikimedia Commons",
+        "site:commons.wikimedia.org \"美国 beer Pale Ale\" Commons"
+      ],
+      "official_brand_asset_search": [
+        "\"内华达山脉 Pale Ale\" official product image",
+        "\"内华达山脉 Pale Ale\" media kit bottle png",
+        "\"内华达山脉\" 官方 产品图 啤酒"
+      ],
+      "structured_open_data_search": [
+        "\"内华达山脉 Pale Ale\" Wikidata image",
+        "\"内华达山脉 Pale Ale\" Open Food Facts beer",
+        "\"内华达山脉 Pale Ale\" Wikipedia bottle image"
+      ],
+      "retail_reference_search": [
+        "\"内华达山脉 Pale Ale\" can bottle packshot",
+        "\"内华达山脉\" Pale Ale 电商 图",
+        "\"内华达山脉 Pale Ale\" bottle transparent png"
+      ]
+    }
+  },
+  {
+    "id": "brooklyn-lager",
+    "brand": "布鲁克林",
+    "name": "Lager",
+    "country": "美国",
+    "style": "拉格",
+    "priority": "high",
+    "searchMethods": {
+      "wikimedia_file_search": [
+        "site:commons.wikimedia.org/wiki/File: \"布鲁克林 Lager\" beer",
+        "site:commons.wikimedia.org/wiki/File: \"布鲁克林 Lager\" bottle",
+        "site:commons.wikimedia.org/wiki/File: \"布鲁克林 Lager\" can"
+      ],
+      "wikimedia_category_search": [
+        "site:commons.wikimedia.org/wiki/Category: \"布鲁克林\" beer",
+        "site:commons.wikimedia.org \"布鲁克林 Lager\" Wikimedia Commons",
+        "site:commons.wikimedia.org \"美国 beer Lager\" Commons"
+      ],
+      "official_brand_asset_search": [
+        "\"布鲁克林 Lager\" official product image",
+        "\"布鲁克林 Lager\" media kit bottle png",
+        "\"布鲁克林\" 官方 产品图 啤酒"
+      ],
+      "structured_open_data_search": [
+        "\"布鲁克林 Lager\" Wikidata image",
+        "\"布鲁克林 Lager\" Open Food Facts beer",
+        "\"布鲁克林 Lager\" Wikipedia bottle image"
+      ],
+      "retail_reference_search": [
+        "\"布鲁克林 Lager\" can bottle packshot",
+        "\"布鲁克林\" Lager 电商 图",
+        "\"布鲁克林 Lager\" bottle transparent png"
+      ]
+    }
+  },
+  {
+    "id": "ballast-point-sculpin",
+    "brand": "巴拉斯特角",
+    "name": "Sculpin IPA",
+    "country": "美国",
+    "style": "IPA",
+    "priority": "high",
+    "searchMethods": {
+      "wikimedia_file_search": [
+        "site:commons.wikimedia.org/wiki/File: \"巴拉斯特角 Sculpin IPA\" beer",
+        "site:commons.wikimedia.org/wiki/File: \"巴拉斯特角 Sculpin IPA\" bottle",
+        "site:commons.wikimedia.org/wiki/File: \"Ballast Point Sculpin IPA\" can"
+      ],
+      "wikimedia_category_search": [
+        "site:commons.wikimedia.org/wiki/Category: \"巴拉斯特角\" beer",
+        "site:commons.wikimedia.org \"巴拉斯特角 Sculpin IPA\" Wikimedia Commons",
+        "site:commons.wikimedia.org \"美国 beer Sculpin IPA\" Commons"
+      ],
+      "official_brand_asset_search": [
+        "\"巴拉斯特角 Sculpin IPA\" official product image",
+        "\"巴拉斯特角 Sculpin IPA\" media kit bottle png",
+        "\"巴拉斯特角\" 官方 产品图 啤酒"
+      ],
+      "structured_open_data_search": [
+        "\"巴拉斯特角 Sculpin IPA\" Wikidata image",
+        "\"巴拉斯特角 Sculpin IPA\" Open Food Facts beer",
+        "\"巴拉斯特角 Sculpin IPA\" Wikipedia bottle image"
+      ],
+      "retail_reference_search": [
+        "\"巴拉斯特角 Sculpin IPA\" can bottle packshot",
+        "\"巴拉斯特角\" Sculpin IPA 电商 图",
+        "\"巴拉斯特角 Sculpin IPA\" bottle transparent png"
+      ]
+    }
+  },
+  {
+    "id": "stone-ipa",
+    "brand": "石头",
+    "name": "IPA",
+    "country": "美国",
+    "style": "IPA",
+    "priority": "high",
+    "searchMethods": {
+      "wikimedia_file_search": [
+        "site:commons.wikimedia.org/wiki/File: \"石头 IPA\" beer",
+        "site:commons.wikimedia.org/wiki/File: \"石头 IPA\" bottle",
+        "site:commons.wikimedia.org/wiki/File: \"Stone IPA\" can"
+      ],
+      "wikimedia_category_search": [
+        "site:commons.wikimedia.org/wiki/Category: \"石头\" beer",
+        "site:commons.wikimedia.org \"石头 IPA\" Wikimedia Commons",
+        "site:commons.wikimedia.org \"美国 beer IPA\" Commons"
+      ],
+      "official_brand_asset_search": [
+        "\"石头 IPA\" official product image",
+        "\"石头 IPA\" media kit bottle png",
+        "\"石头\" 官方 产品图 啤酒"
+      ],
+      "structured_open_data_search": [
+        "\"石头 IPA\" Wikidata image",
+        "\"石头 IPA\" Open Food Facts beer",
+        "\"石头 IPA\" Wikipedia bottle image"
+      ],
+      "retail_reference_search": [
+        "\"石头 IPA\" can bottle packshot",
+        "\"石头\" IPA 电商 图",
+        "\"石头 IPA\" bottle transparent png"
+      ]
+    }
+  },
+  {
+    "id": "orval-trappist",
+    "brand": "奥瓦尔",
+    "name": "Trappist Ale",
+    "country": "比利时",
+    "style": "修道院啤酒",
+    "priority": "high",
+    "searchMethods": {
+      "wikimedia_file_search": [
+        "site:commons.wikimedia.org/wiki/File: \"奥瓦尔 Trappist Ale\" beer",
+        "site:commons.wikimedia.org/wiki/File: \"奥瓦尔 Trappist Ale\" bottle",
+        "site:commons.wikimedia.org/wiki/File: \"Orval Trappist Ale\" can"
+      ],
+      "wikimedia_category_search": [
+        "site:commons.wikimedia.org/wiki/Category: \"奥瓦尔\" beer",
+        "site:commons.wikimedia.org \"奥瓦尔 Trappist Ale\" Wikimedia Commons",
+        "site:commons.wikimedia.org \"比利时 beer Trappist Ale\" Commons"
+      ],
+      "official_brand_asset_search": [
+        "\"奥瓦尔 Trappist Ale\" official product image",
+        "\"奥瓦尔 Trappist Ale\" media kit bottle png",
+        "\"奥瓦尔\" 官方 产品图 啤酒"
+      ],
+      "structured_open_data_search": [
+        "\"奥瓦尔 Trappist Ale\" Wikidata image",
+        "\"奥瓦尔 Trappist Ale\" Open Food Facts beer",
+        "\"奥瓦尔 Trappist Ale\" Wikipedia bottle image"
+      ],
+      "retail_reference_search": [
+        "\"奥瓦尔 Trappist Ale\" can bottle packshot",
+        "\"奥瓦尔\" Trappist Ale 电商 图",
+        "\"奥瓦尔 Trappist Ale\" bottle transparent png"
+      ]
+    }
+  },
+  {
+    "id": "duvel-golden-ale",
+    "brand": "督威",
+    "name": "Golden Ale",
+    "country": "比利时",
+    "style": "金色艾尔",
+    "priority": "high",
+    "searchMethods": {
+      "wikimedia_file_search": [
+        "site:commons.wikimedia.org/wiki/File: \"督威 Golden Ale\" beer",
+        "site:commons.wikimedia.org/wiki/File: \"督威 Golden Ale\" bottle",
+        "site:commons.wikimedia.org/wiki/File: \"Duvel Golden Ale\" can"
+      ],
+      "wikimedia_category_search": [
+        "site:commons.wikimedia.org/wiki/Category: \"督威\" beer",
+        "site:commons.wikimedia.org \"督威 Golden Ale\" Wikimedia Commons",
+        "site:commons.wikimedia.org \"比利时 beer Golden Ale\" Commons"
+      ],
+      "official_brand_asset_search": [
+        "\"督威 Golden Ale\" official product image",
+        "\"督威 Golden Ale\" media kit bottle png",
+        "\"督威\" 官方 产品图 啤酒"
+      ],
+      "structured_open_data_search": [
+        "\"督威 Golden Ale\" Wikidata image",
+        "\"督威 Golden Ale\" Open Food Facts beer",
+        "\"督威 Golden Ale\" Wikipedia bottle image"
+      ],
+      "retail_reference_search": [
+        "\"督威 Golden Ale\" can bottle packshot",
+        "\"督威\" Golden Ale 电商 图",
+        "\"督威 Golden Ale\" bottle transparent png"
+      ]
+    }
+  },
+  {
+    "id": "westmalle-dubbel",
+    "brand": "维斯特玛",
+    "name": "Dubbel",
+    "country": "比利时",
+    "style": "修道院啤酒",
+    "priority": "high",
+    "searchMethods": {
+      "wikimedia_file_search": [
+        "site:commons.wikimedia.org/wiki/File: \"维斯特玛 Dubbel\" beer",
+        "site:commons.wikimedia.org/wiki/File: \"维斯特玛 Dubbel\" bottle",
+        "site:commons.wikimedia.org/wiki/File: \"Westmalle Dubbel\" can"
+      ],
+      "wikimedia_category_search": [
+        "site:commons.wikimedia.org/wiki/Category: \"维斯特玛\" beer",
+        "site:commons.wikimedia.org \"维斯特玛 Dubbel\" Wikimedia Commons",
+        "site:commons.wikimedia.org \"比利时 beer Dubbel\" Commons"
+      ],
+      "official_brand_asset_search": [
+        "\"维斯特玛 Dubbel\" official product image",
+        "\"维斯特玛 Dubbel\" media kit bottle png",
+        "\"维斯特玛\" 官方 产品图 啤酒"
+      ],
+      "structured_open_data_search": [
+        "\"维斯特玛 Dubbel\" Wikidata image",
+        "\"维斯特玛 Dubbel\" Open Food Facts beer",
+        "\"维斯特玛 Dubbel\" Wikipedia bottle image"
+      ],
+      "retail_reference_search": [
+        "\"维斯特玛 Dubbel\" can bottle packshot",
+        "\"维斯特玛\" Dubbel 电商 图",
+        "\"维斯特玛 Dubbel\" bottle transparent png"
+      ]
+    }
+  },
+  {
+    "id": "hitachino-white-ale",
+    "brand": "常陆野猫头鹰",
+    "name": "White Ale",
+    "country": "日本",
+    "style": "小麦啤",
+    "priority": "high",
+    "searchMethods": {
+      "wikimedia_file_search": [
+        "site:commons.wikimedia.org/wiki/File: \"常陆野猫头鹰 White Ale\" beer",
+        "site:commons.wikimedia.org/wiki/File: \"常陆野猫头鹰 White Ale\" bottle",
+        "site:commons.wikimedia.org/wiki/File: \"Hitachino White Ale\" can"
+      ],
+      "wikimedia_category_search": [
+        "site:commons.wikimedia.org/wiki/Category: \"常陆野猫头鹰\" beer",
+        "site:commons.wikimedia.org \"常陆野猫头鹰 White Ale\" Wikimedia Commons",
+        "site:commons.wikimedia.org \"日本 beer White Ale\" Commons"
+      ],
+      "official_brand_asset_search": [
+        "\"常陆野猫头鹰 White Ale\" official product image",
+        "\"常陆野猫头鹰 White Ale\" media kit bottle png",
+        "\"常陆野猫头鹰\" 官方 产品图 啤酒"
+      ],
+      "structured_open_data_search": [
+        "\"常陆野猫头鹰 White Ale\" Wikidata image",
+        "\"常陆野猫头鹰 White Ale\" Open Food Facts beer",
+        "\"常陆野猫头鹰 White Ale\" Wikipedia bottle image"
+      ],
+      "retail_reference_search": [
+        "\"常陆野猫头鹰 White Ale\" can bottle packshot",
+        "\"常陆野猫头鹰\" White Ale 电商 图",
+        "\"常陆野猫头鹰 White Ale\" bottle transparent png"
+      ]
+    }
+  },
+  {
+    "id": "yoho-yondan",
+    "brand": "馨和",
+    "name": "印度青鬼 IPA",
+    "country": "日本",
+    "style": "IPA",
+    "priority": "high",
+    "searchMethods": {
+      "wikimedia_file_search": [
+        "site:commons.wikimedia.org/wiki/File: \"馨和 印度青鬼 IPA\" beer",
+        "site:commons.wikimedia.org/wiki/File: \"馨和 印度青鬼 IPA\" bottle",
+        "site:commons.wikimedia.org/wiki/File: \"Yo-Ho Brewing Yona Yona / Indo no Aooni\" can"
+      ],
+      "wikimedia_category_search": [
+        "site:commons.wikimedia.org/wiki/Category: \"馨和\" beer",
+        "site:commons.wikimedia.org \"馨和 印度青鬼 IPA\" Wikimedia Commons",
+        "site:commons.wikimedia.org \"日本 beer 印度青鬼 IPA\" Commons"
+      ],
+      "official_brand_asset_search": [
+        "\"馨和 印度青鬼 IPA\" official product image",
+        "\"馨和 印度青鬼 IPA\" media kit bottle png",
+        "\"馨和\" 官方 产品图 啤酒"
+      ],
+      "structured_open_data_search": [
+        "\"馨和 印度青鬼 IPA\" Wikidata image",
+        "\"馨和 印度青鬼 IPA\" Open Food Facts beer",
+        "\"馨和 印度青鬼 IPA\" Wikipedia bottle image"
+      ],
+      "retail_reference_search": [
+        "\"馨和 印度青鬼 IPA\" can bottle packshot",
+        "\"馨和\" 印度青鬼 IPA 电商 图",
+        "\"馨和 印度青鬼 IPA\" bottle transparent png"
+      ]
+    }
+  },
+  {
+    "id": "young-master-cha-chaan",
+    "brand": "少爷啤",
+    "name": "Cha Chaan Teng Gose",
+    "country": "中国",
+    "style": "酸啤",
+    "priority": "high",
+    "searchMethods": {
+      "wikimedia_file_search": [
+        "site:commons.wikimedia.org/wiki/File: \"少爷啤 Cha Chaan Teng Gose\" beer",
+        "site:commons.wikimedia.org/wiki/File: \"少爷啤 Cha Chaan Teng Gose\" bottle",
+        "site:commons.wikimedia.org/wiki/File: \"Young Master Cha Chaan Teng Gose\" can"
+      ],
+      "wikimedia_category_search": [
+        "site:commons.wikimedia.org/wiki/Category: \"少爷啤\" beer",
+        "site:commons.wikimedia.org \"少爷啤 Cha Chaan Teng Gose\" Wikimedia Commons",
+        "site:commons.wikimedia.org \"中国 beer Cha Chaan Teng Gose\" Commons"
+      ],
+      "official_brand_asset_search": [
+        "\"少爷啤 Cha Chaan Teng Gose\" official product image",
+        "\"少爷啤 Cha Chaan Teng Gose\" media kit bottle png",
+        "\"少爷啤\" 官方 产品图 啤酒"
+      ],
+      "structured_open_data_search": [
+        "\"少爷啤 Cha Chaan Teng Gose\" Wikidata image",
+        "\"少爷啤 Cha Chaan Teng Gose\" Open Food Facts beer",
+        "\"少爷啤 Cha Chaan Teng Gose\" Wikipedia bottle image"
+      ],
+      "retail_reference_search": [
+        "\"少爷啤 Cha Chaan Teng Gose\" can bottle packshot",
+        "\"少爷啤\" Cha Chaan Teng Gose 电商 图",
+        "\"少爷啤 Cha Chaan Teng Gose\" bottle transparent png"
+      ]
+    }
+  },
+  {
+    "id": "master-gao-baby-jasmine",
+    "brand": "高大师",
+    "name": "婴儿茉莉花皮尔森",
+    "country": "中国",
+    "style": "皮尔森",
+    "priority": "high",
+    "searchMethods": {
+      "wikimedia_file_search": [
+        "site:commons.wikimedia.org/wiki/File: \"高大师 婴儿茉莉花皮尔森\" beer",
+        "site:commons.wikimedia.org/wiki/File: \"高大师 婴儿茉莉花皮尔森\" bottle",
+        "site:commons.wikimedia.org/wiki/File: \"Master Gao Baby Jasmine Pils\" can"
+      ],
+      "wikimedia_category_search": [
+        "site:commons.wikimedia.org/wiki/Category: \"高大师\" beer",
+        "site:commons.wikimedia.org \"高大师 婴儿茉莉花皮尔森\" Wikimedia Commons",
+        "site:commons.wikimedia.org \"中国 beer 婴儿茉莉花皮尔森\" Commons"
+      ],
+      "official_brand_asset_search": [
+        "\"高大师 婴儿茉莉花皮尔森\" official product image",
+        "\"高大师 婴儿茉莉花皮尔森\" media kit bottle png",
+        "\"高大师\" 官方 产品图 啤酒"
+      ],
+      "structured_open_data_search": [
+        "\"高大师 婴儿茉莉花皮尔森\" Wikidata image",
+        "\"高大师 婴儿茉莉花皮尔森\" Open Food Facts beer",
+        "\"高大师 婴儿茉莉花皮尔森\" Wikipedia bottle image"
+      ],
+      "retail_reference_search": [
+        "\"高大师 婴儿茉莉花皮尔森\" can bottle packshot",
+        "\"高大师\" 婴儿茉莉花皮尔森 电商 图",
+        "\"高大师 婴儿茉莉花皮尔森\" bottle transparent png"
+      ]
+    }
+  }
+]

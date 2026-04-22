@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="960" height="640" viewBox="0 0 960 640" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="scene" x1="80" y1="52" x2="780" y2="560" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8bd6d0" />
+      <stop offset="1" stop-color="#4daeb1" />
+    </linearGradient>
+  </defs>
+  <rect x="20" y="20" width="920" height="600" rx="42" fill="url(#scene)"/>
+  <rect x="84" y="110" width="792" height="368" rx="28" fill="rgba(255,255,255,0.14)"/>
+  <rect x="120" y="420" width="720" height="30" rx="15" fill="rgba(34,24,18,0.18)"/>
+  <circle cx="224" cy="268" r="88" fill="rgba(255,255,255,0.18)"/>
+  <circle cx="736" cy="220" r="58" fill="rgba(255,255,255,0.15)"/>
+  <text x="120" y="170" font-size="44" fill="#fff" font-family="Arial, sans-serif" font-weight="700">少爷啤 Cha Chaan Teng Gose</text>
+  <text x="120" y="224" font-size="22" fill="rgba(255,255,255,0.9)" font-family="Arial, sans-serif">这类 Gose 路线的魅力在于酸感、盐感和柑橘/香料联想交织在一起，喝起来像一杯带酒精度的海边气泡饮。喜欢猎奇又怕太苦的人通常会很买账。</text>
+  <text x="120" y="528" font-size="22" fill="#fff" font-family="Arial, sans-serif">适饮温度 5-7°C · 推荐搭配 海鲜 · 沙拉 · 轻食</text>
+  <text x="120" y="566" font-size="18" fill="rgba(255,255,255,0.86)" font-family="Arial, sans-serif">酸啤在夏天很有存在感，酸爽和果香会带来近似气泡饮料的清醒感，但风味辨识度更高。</text>
+</svg>
