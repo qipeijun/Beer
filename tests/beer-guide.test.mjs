@@ -139,3 +139,12 @@ test("index.html boots with classic scripts so it can open directly from the fil
   assert.match(html, /src="\.\/data\.global\.js"/);
   assert.match(html, /src="\.\/app\.global\.js"/);
 });
+
+test("vercel deployment declares the project root as the output directory", () => {
+  const vercelConfigPath = path.join(process.cwd(), "vercel.json");
+
+  assert.ok(fs.existsSync(vercelConfigPath), "expected vercel.json to exist");
+
+  const vercelConfig = JSON.parse(fs.readFileSync(vercelConfigPath, "utf8"));
+  assert.equal(vercelConfig.outputDirectory, ".");
+});
