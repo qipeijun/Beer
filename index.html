@@ -22,6 +22,14 @@
       </div>
     </header>
 
+    <button class="filter-toggle" data-filter-toggle aria-expanded="false">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M2 4h12M4 8h8M6 12h4" stroke-linecap="round"/>
+      </svg>
+      筛选条件
+      <span class="count-badge" data-mobile-count>0</span>
+    </button>
+
     <main class="shell">
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-copy">
@@ -64,7 +72,7 @@
         </aside>
       </section>
 
-      <section id="catalogue" class="section">
+      <section id="catalogue" class="section" data-reveal>
         <div class="feature-strip" data-editorials></div>
 
         <form class="filters" data-filter-form>
@@ -124,21 +132,14 @@
 
         <div class="guide-grid" data-results></div>
 
+        <div class="detail-backdrop" data-detail-backdrop></div>
         <div class="detail-shell">
-          <div class="catalogue-head detail-head">
-            <div>
-              <p class="eyebrow">Linked Detail</p>
-              <h2>选中产品的完整介绍</h2>
-              <p class="section-copy">
-                点击任意产品卡片，下面会同步更新更完整的风味说明、搭配建议、适饮温度和品牌故事。
-              </p>
-            </div>
-          </div>
+          <button class="detail-close" data-detail-close aria-label="关闭详情">&times;</button>
           <div data-detail></div>
         </div>
       </section>
 
-      <section id="notes" class="section">
+      <section id="notes" class="section" data-reveal>
         <p class="eyebrow">How To Choose</p>
         <h2>夏天选啤酒，三条经验就够</h2>
         <p class="section-copy">
@@ -160,7 +161,7 @@
         </div>
       </section>
 
-      <section id="about" class="section">
+      <section id="about" class="section" data-reveal>
         <p class="eyebrow">Data Notes</p>
         <h2>关于这份页面</h2>
         <div class="notes">
@@ -179,7 +180,7 @@
         </div>
       </section>
 
-      <section id="credits" class="section">
+      <section id="credits" class="section" data-reveal>
         <p class="eyebrow">Image Credits</p>
         <h2>图片来源说明</h2>
         <p class="section-copy">

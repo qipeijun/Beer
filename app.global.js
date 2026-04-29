@@ -77,7 +77,7 @@ function summarizeSelection(filters = DEFAULT_FILTERS) {
   ].filter((value) => value && value !== "全部");
 
   if (filters.search?.trim()) {
-    segments.push(`关键词“${filters.search.trim()}”`);
+    segments.push(`关键词"${filters.search.trim()}"`);
   }
 
   return segments.length
@@ -120,13 +120,14 @@ function escapeHtml(value) {
     .replaceAll('"', "&quot;");
 }
 
-function renderBeerCard(beer, isActive) {
+function renderBeerCard(beer, isActive, index, animate) {
   const priceBand = derivePriceBand(beer.priceCny);
   const tags = beer.highlightTags.slice(0, 3);
   const imageBadge = beer.imageKind === "real" ? "真实图" : "生成图";
+  const animAttr = animate ? ` data-animate style="animation-delay: ${(index || 0) * 50}ms"` : "";
 
   return `
-    <article class="beer-card ${isActive ? "is-active" : ""}" data-beer-id="${escapeHtml(beer.id)}" tabindex="0" role="button" aria-pressed="${isActive}">
+    <article class="beer-card ${isActive ? "is-active" : ""}" data-beer-id="${escapeHtml(beer.id)}" tabindex="0" role="button" aria-pressed="${isActive}"${animAttr}>
       <div class="card-image-wrap">
         <img class="card-image" src="${escapeHtml(beer.image)}" alt="${escapeHtml(`${beer.brand} ${beer.name}`)}" loading="lazy" decoding="async" />
         <span class="image-badge">${escapeHtml(imageBadge)}</span>
@@ -265,29 +266,48 @@ function readFilters(form) {
   };
 }
 
-function updateView(beers, filters, state, nodes) {
+function updateView(beers, filters, state, nodes, mobileCount) {
   const results = filterBeers(beers, filters);
   const activeBeer = pickActiveBeer(results, state.activeId);
   state.activeId = activeBeer?.id ?? null;
 
   nodes.count.textContent = `${results.length}`;
+  if (mobileCount) mobileCount.textContent = `${results.length}`;
   nodes.summary.textContent = summarizeSelection(filters);
-  nodes.grid.innerHTML = results.length
-    ? results.map((beer) => renderBeerCard(beer, beer.id === state.activeId)).join("")
-    : `
-      <article class="empty-state">
-        <h3>这组条件下还没有匹配结果</h3>
-        <p>试试先放宽一个条件，或者搜索“白啤”“IPA”“日本”等关键词。</p>
-      </article>
-    `;
-  nodes.detail.innerHTML = activeBeer
-    ? renderBeerDetail(activeBeer)
-    : `
-      <article class="empty-state">
-        <h3>暂无可展示详情</h3>
-        <p>调整一下筛选条件，重新选择一支更适合当前场景的啤酒。</p>
-      </article>
-    `;
+
+  // Crossfade grid
+  nodes.grid.classList.add("is-updating");
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      const animate = !state.rendered;
+      state.rendered = true;
+      nodes.grid.innerHTML = results.length
+        ? results.map((beer, i) => renderBeerCard(beer, beer.id === state.activeId, i, animate)).join("")
+        : `
+          <article class="empty-state">
+            <h3>这组条件下还没有匹配结果</h3>
+            <p>试试先放宽一个条件，或者搜索"白啤""IPA""日本"等关键词。</p>
+          </article>
+        `;
+      nodes.grid.classList.remove("is-updating");
+    }, 100);
+  });
+
+  // Crossfade detail
+  nodes.detail.classList.add("is-updating");
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      nodes.detail.innerHTML = activeBeer
+        ? renderBeerDetail(activeBeer)
+        : `
+          <article class="empty-state">
+            <h3>暂无可展示详情</h3>
+            <p>调整一下筛选条件，重新选择一支更适合当前场景的啤酒。</p>
+          </article>
+        `;
+      nodes.detail.classList.remove("is-updating");
+    }, 100);
+  });
 }
 
 function initBeerGuide(beers) {
@@ -302,6 +322,11 @@ function initBeerGuide(beers) {
   const editorials = document.querySelector("[data-editorials]");
   const reset = document.querySelector("[data-reset]");
   const total = document.querySelector("[data-total-count]");
+  const filterToggle = document.querySelector("[data-filter-toggle]");
+  const mobileCount = document.querySelector("[data-mobile-count]");
+  const detailShell = document.querySelector(".detail-shell");
+  const detailBackdrop = document.querySelector("[data-detail-backdrop]");
+  const detailClose = document.querySelector("[data-detail-close]");
 
   if (!form || !grid || !detail || !count || !summary || !quickPicks || !editorials || !reset) {
     return;
@@ -313,7 +338,33 @@ function initBeerGuide(beers) {
   if (total) total.textContent = `${beers.length}`;
 
   const state = { activeId: beers[0]?.id ?? null };
-  const applyFilters = () => updateView(beers, readFilters(form), state, { grid, detail, count, summary });
+  const applyFilters = () => updateView(beers, readFilters(form), state, { grid, detail, count, summary }, mobileCount);
+
+  // Save original parent for portal round-trip
+  const detailShellParent = detailShell ? detailShell.parentNode : null;
+  const detailBackdropParent = detailBackdrop ? detailBackdrop.parentNode : null;
+
+  function openDetail() {
+    if (!detailShell) return;
+    // Portal to body so position:fixed centers on viewport
+    document.body.appendChild(detailBackdrop);
+    document.body.appendChild(detailShell);
+    detailBackdrop.classList.add("is-visible");
+    detailShell.classList.add("is-open");
+    requestAnimationFrame(() => detailShell.classList.add("is-visible"));
+  }
+
+  function closeDetail() {
+    if (!detailShell) return;
+    detailShell.classList.remove("is-visible");
+    detailBackdrop.classList.remove("is-visible");
+    setTimeout(() => {
+      detailShell.classList.remove("is-open");
+      // Move back to original parent
+      if (detailShellParent) detailShellParent.appendChild(detailShell);
+      if (detailBackdropParent) detailBackdropParent.appendChild(detailBackdrop);
+    }, 300);
+  }
 
   form.addEventListener("input", applyFilters);
   reset.addEventListener("click", () => {
@@ -333,7 +384,7 @@ function initBeerGuide(beers) {
     if (!card) return;
     state.activeId = card.dataset.beerId;
     applyFilters();
-    detail.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    openDetail();
   });
   grid.addEventListener("keydown", (event) => {
     if (event.key !== "Enter" && event.key !== " ") return;
@@ -342,7 +393,66 @@ function initBeerGuide(beers) {
     event.preventDefault();
     state.activeId = card.dataset.beerId;
     applyFilters();
+    openDetail();
   });
+
+  if (detailClose) detailClose.addEventListener("click", closeDetail);
+  if (detailBackdrop) detailBackdrop.addEventListener("click", closeDetail);
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeDetail();
+  });
+
+  // Mobile filter toggle
+  if (filterToggle && form) {
+    if (window.innerWidth <= 720) {
+      form.classList.add("is-collapsed");
+    }
+
+    filterToggle.addEventListener("click", () => {
+      const isCollapsed = form.classList.toggle("is-collapsed");
+      filterToggle.setAttribute("aria-expanded", String(!isCollapsed));
+      if (!isCollapsed) {
+        form.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
+  }
+
+  // Scroll reveal
+  const revealSections = document.querySelectorAll("[data-reveal]");
+  if (revealSections.length) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+    revealSections.forEach((el) => observer.observe(el));
+  }
+
+  // Touch swipe for mobile card navigation
+  let touchStartX = 0;
+  grid.addEventListener("touchstart", (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+  grid.addEventListener("touchend", (e) => {
+    const diff = e.changedTouches[0].screenX - touchStartX;
+    if (Math.abs(diff) < 60) return;
+    const cards = [...grid.querySelectorAll("[data-beer-id]")];
+    const currentIdx = cards.findIndex((c) => c.dataset.beerId === state.activeId);
+    const nextIdx = diff < 0
+      ? Math.min(currentIdx + 1, cards.length - 1)
+      : Math.max(currentIdx - 1, 0);
+    if (cards[nextIdx]) {
+      state.activeId = cards[nextIdx].dataset.beerId;
+      applyFilters();
+      cards[nextIdx].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+    }
+  }, { passive: true });
 
   applyFilters();
 }
