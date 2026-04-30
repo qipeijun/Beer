@@ -1484,5 +1484,133 @@ window.BeerGuideData = {
       ],
       "story": "皮尔森通常比基础拉格更有啤酒花存在感，清脆微苦，适合从淡啤向风格啤酒过渡。"
     }
-  ]
+  ],
+  "pageSections": [
+    {
+      "id": "notes",
+      "eyebrow": "How To Choose",
+      "title": "夏天选啤酒，三条经验就够",
+      "intro": "炎热天气下，口感与场景比复杂术语更重要。先确认你是想“解暑”“配餐”还是“慢饮”，再决定选清爽型、小麦型还是苦度更高的 IPA。",
+      "items": [
+        {
+          "title": "想解暑",
+          "body": "优先看拉格、皮尔森、白啤。关键词通常是清爽、干净、轻盈、微苦，适合露营、海边和夜宵。"
+        },
+        {
+          "title": "想配餐",
+          "body": "炸物、烧烤更适合带一点苦度或麦香的酒；海鲜和沙拉更适合清爽、果香或带香料感的小麦风格。"
+        },
+        {
+          "title": "想慢饮",
+          "body": "可以往修道院、世涛、IPA 走，风味更复杂，价格也更高，不建议把它们当作大口猛灌型夏日水啤。"
+        }
+      ]
+    },
+    {
+      "id": "about",
+      "eyebrow": "Data Notes",
+      "title": "关于这份页面",
+      "items": [
+        {
+          "title": "价格说明",
+          "body": "页面中的价格为中国主流零售渠道参考价，不代表实时售价。不同城市、平台和活动期会有差异。"
+        },
+        {
+          "title": "配料说明",
+          "body": "配料字段用于辅助理解风格与口感，例如小麦、香料、橙皮、焦香麦芽等，最终仍以产品包装标识为准。"
+        },
+        {
+          "title": "扩展策略",
+          "body": "首版是高质量精选库，数据结构已预留后续接远程 JSON 与更大品牌索引的扩展空间。"
+        }
+      ]
+    },
+    {
+      "id": "credits",
+      "eyebrow": "Image Credits",
+      "title": "图片来源说明",
+      "intro": "页面中的部分真实产品图来自 Wikimedia Commons，并已下载为本地图片供页面使用。其余产品仍使用项目内统一生成的风格海报图，以保证整体完整度和加载性能。",
+      "items": [
+        {
+          "title": "已接入真实图",
+          "body": "爱士堡 小麦白啤、百威 经典拉格、柏龙 小麦白啤、贝克格 Bitburger Pils、朝日 Super Dry、福佳 白啤、嘉士伯 Pilsner、健力士 Draught、科罗娜 Extra、乐飞 金啤、皮尔森欧克 Pilsner Urquell、麒麟 一番榨、时代 Stella Artois、喜力 Original、札幌 Premium Beer。"
+        },
+        {
+          "title": "来源页",
+          "links": [
+            {
+              "label": "爱士堡 小麦白啤",
+              "href": "https://commons.wikimedia.org/wiki/File:Erdinger_weissbrau.jpg"
+            },
+            {
+              "label": "百威 经典拉格",
+              "href": "https://commons.wikimedia.org/wiki/File:Budweiser_Bottle.jpg"
+            },
+            {
+              "label": "柏龙 小麦白啤",
+              "href": "https://commons.wikimedia.org/wiki/File:Paulaner_Hefe-Weissbier.JPG"
+            },
+            {
+              "label": "贝克格 Bitburger Pils",
+              "href": "https://commons.wikimedia.org/wiki/File:Bitburger_Pils.jpg"
+            },
+            {
+              "label": "朝日 Super Dry",
+              "href": "https://commons.wikimedia.org/wiki/File:Asahi_Super_Dry.jpg"
+            },
+            {
+              "label": "福佳 白啤",
+              "href": "https://commons.wikimedia.org/wiki/File:Hoegaarden_bottle.JPG"
+            },
+            {
+              "label": "嘉士伯 Pilsner",
+              "href": "https://commons.wikimedia.org/wiki/File:Carlsberg_(bottle).jpg"
+            },
+            {
+              "label": "健力士 Draught",
+              "href": "https://commons.wikimedia.org/wiki/File:Guinness_Draught.jpg"
+            },
+            {
+              "label": "科罗娜 Extra",
+              "href": "https://commons.wikimedia.org/wiki/File:Corona_Extra_beer_bottle_(2019).png"
+            },
+            {
+              "label": "乐飞 金啤",
+              "href": "https://commons.wikimedia.org/wiki/File:LeffeBlond.jpg"
+            },
+            {
+              "label": "皮尔森欧克 Pilsner Urquell",
+              "href": "https://commons.wikimedia.org/wiki/File:Pilsner_Urquell_330mL_Bottle.jpg"
+            },
+            {
+              "label": "麒麟 一番榨",
+              "href": "https://commons.wikimedia.org/wiki/File:Kirin_Beer.jpg"
+            },
+            {
+              "label": "时代 Stella Artois",
+              "href": "https://commons.wikimedia.org/wiki/File:Stella_Artois_bottle.jpg"
+            },
+            {
+              "label": "喜力 Original",
+              "href": "https://commons.wikimedia.org/wiki/File:Heineken_Bottle.JPG"
+            },
+            {
+              "label": "札幌 Premium Beer",
+              "href": "https://commons.wikimedia.org/wiki/File:A_Bottle_of_Sapporo_Beer.jpg"
+            }
+          ]
+        },
+        {
+          "title": "继续扩充",
+          "body": "完整清单维护在项目文档中。后续继续补图时，会优先选择带明确许可证与来源页的公共图库素材，而不是直接热链电商图。"
+        }
+      ]
+    }
+  ],
+  "pageMeta": {
+    "countryCount": 11,
+    "decisionDimensions": 5,
+    "defaultSummary": "从人群、口感、产地和价格带切入，快速找到适合夏天的那一杯。",
+    "bootErrorMessage": "页面数据暂时不可用，请稍后刷新，或检查本地数据文件是否完整。"
+  }
 };

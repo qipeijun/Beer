@@ -802,3 +802,85 @@ const rawBeers = [
 ];
 
 export const beers = rawBeers.map(enrichBeer);
+
+const realImageEntries = beers
+  .filter((beer) => beer.imageKind === "real" && beer.imageSourcePage)
+  .sort((left, right) =>
+    `${left.brand} ${left.name}`.localeCompare(`${right.brand} ${right.name}`, "zh-Hans-CN"),
+  );
+
+const realImageNames = realImageEntries.map((beer) => `${beer.brand} ${beer.name}`);
+
+export const pageSections = [
+  {
+    id: "notes",
+    eyebrow: "How To Choose",
+    title: "夏天选啤酒，三条经验就够",
+    intro:
+      "炎热天气下，口感与场景比复杂术语更重要。先确认你是想“解暑”“配餐”还是“慢饮”，再决定选清爽型、小麦型还是苦度更高的 IPA。",
+    items: [
+      {
+        title: "想解暑",
+        body: "优先看拉格、皮尔森、白啤。关键词通常是清爽、干净、轻盈、微苦，适合露营、海边和夜宵。"
+      },
+      {
+        title: "想配餐",
+        body: "炸物、烧烤更适合带一点苦度或麦香的酒；海鲜和沙拉更适合清爽、果香或带香料感的小麦风格。"
+      },
+      {
+        title: "想慢饮",
+        body: "可以往修道院、世涛、IPA 走，风味更复杂，价格也更高，不建议把它们当作大口猛灌型夏日水啤。"
+      }
+    ]
+  },
+  {
+    id: "about",
+    eyebrow: "Data Notes",
+    title: "关于这份页面",
+    items: [
+      {
+        title: "价格说明",
+        body: "页面中的价格为中国主流零售渠道参考价，不代表实时售价。不同城市、平台和活动期会有差异。"
+      },
+      {
+        title: "配料说明",
+        body: "配料字段用于辅助理解风格与口感，例如小麦、香料、橙皮、焦香麦芽等，最终仍以产品包装标识为准。"
+      },
+      {
+        title: "扩展策略",
+        body: "首版是高质量精选库，数据结构已预留后续接远程 JSON 与更大品牌索引的扩展空间。"
+      }
+    ]
+  },
+  {
+    id: "credits",
+    eyebrow: "Image Credits",
+    title: "图片来源说明",
+    intro:
+      "页面中的部分真实产品图来自 Wikimedia Commons，并已下载为本地图片供页面使用。其余产品仍使用项目内统一生成的风格海报图，以保证整体完整度和加载性能。",
+    items: [
+      {
+        title: "已接入真实图",
+        body: `${realImageNames.join("、")}。`
+      },
+      {
+        title: "来源页",
+        links: realImageEntries.map((beer) => ({
+          label: `${beer.brand} ${beer.name}`,
+          href: beer.imageSourcePage
+        }))
+      },
+      {
+        title: "继续扩充",
+        body: "完整清单维护在项目文档中。后续继续补图时，会优先选择带明确许可证与来源页的公共图库素材，而不是直接热链电商图。"
+      }
+    ]
+  }
+];
+
+export const pageMeta = {
+  countryCount: new Set(beers.map((beer) => beer.country)).size,
+  decisionDimensions: 5,
+  defaultSummary: "从人群、口感、产地和价格带切入，快速找到适合夏天的那一杯。",
+  bootErrorMessage: "页面数据暂时不可用，请稍后刷新，或检查本地数据文件是否完整。"
+};

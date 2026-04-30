@@ -22,14 +22,6 @@
       </div>
     </header>
 
-    <button class="filter-toggle" data-filter-toggle aria-expanded="false">
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
-        <path d="M2 4h12M4 8h8M6 12h4" stroke-linecap="round"/>
-      </svg>
-      筛选条件
-      <span class="count-badge" data-mobile-count>0</span>
-    </button>
-
     <main class="shell">
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-copy">
@@ -48,11 +40,11 @@
               <span>首版精选单品</span>
             </div>
             <div class="stat">
-              <strong>11</strong>
+              <strong data-country-count>0</strong>
               <span>覆盖国家/地区</span>
             </div>
             <div class="stat">
-              <strong>5</strong>
+              <strong data-dimension-count>0</strong>
               <span>核心决策维度</span>
             </div>
           </div>
@@ -72,10 +64,27 @@
         </aside>
       </section>
 
+      <p class="app-status" data-app-status role="status" hidden></p>
+
       <section id="catalogue" class="section" data-reveal>
         <div class="feature-strip" data-editorials></div>
 
-        <form class="filters" data-filter-form>
+        <button
+          class="filter-toggle"
+          type="button"
+          data-filter-toggle
+          data-filter-anchor
+          aria-expanded="false"
+          aria-controls="catalogue-filters"
+        >
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path d="M2 4h12M4 8h8M6 12h4" stroke-linecap="round" />
+          </svg>
+          筛选条件
+          <span class="count-badge" data-mobile-count>0</span>
+        </button>
+
+        <form id="catalogue-filters" class="filters" data-filter-form>
           <div class="filters-header">
             <div>
               <p class="eyebrow">Decision Layer</p>
@@ -132,101 +141,20 @@
 
         <div class="guide-grid" data-results></div>
 
-        <div class="detail-backdrop" data-detail-backdrop></div>
-        <div class="detail-shell">
+        <dialog class="detail-dialog" data-detail-dialog aria-labelledby="detail-title">
           <button class="detail-close" data-detail-close aria-label="关闭详情">&times;</button>
           <div data-detail></div>
-        </div>
+        </dialog>
       </section>
 
-      <section id="notes" class="section" data-reveal>
-        <p class="eyebrow">How To Choose</p>
-        <h2>夏天选啤酒，三条经验就够</h2>
-        <p class="section-copy">
-          炎热天气下，口感与场景比复杂术语更重要。先确认你是想“解暑”“配餐”还是“慢饮”，再决定选清爽型、小麦型还是苦度更高的 IPA。
-        </p>
-        <div class="notes">
-          <article class="note-card">
-            <h3>想解暑</h3>
-            <p>优先看拉格、皮尔森、白啤。关键词通常是清爽、干净、轻盈、微苦，适合露营、海边和夜宵。</p>
-          </article>
-          <article class="note-card">
-            <h3>想配餐</h3>
-            <p>炸物、烧烤更适合带一点苦度或麦香的酒；海鲜和沙拉更适合清爽、果香或带香料感的小麦风格。</p>
-          </article>
-          <article class="note-card">
-            <h3>想慢饮</h3>
-            <p>可以往修道院、世涛、IPA 走，风味更复杂，价格也更高，不建议把它们当作大口猛灌型夏日水啤。</p>
-          </article>
-        </div>
-      </section>
+      <section id="notes" class="section" data-reveal data-section="notes"></section>
 
-      <section id="about" class="section" data-reveal>
-        <p class="eyebrow">Data Notes</p>
-        <h2>关于这份页面</h2>
-        <div class="notes">
-          <article class="note-card">
-            <h3>价格说明</h3>
-            <p>页面中的价格为中国主流零售渠道参考价，不代表实时售价。不同城市、平台和活动期会有差异。</p>
-          </article>
-          <article class="note-card">
-            <h3>配料说明</h3>
-            <p>配料字段用于辅助理解风格与口感，例如小麦、香料、橙皮、焦香麦芽等，最终仍以产品包装标识为准。</p>
-          </article>
-          <article class="note-card">
-            <h3>扩展策略</h3>
-            <p>首版是高质量精选库，数据结构已预留后续接远程 JSON 与更大品牌索引的扩展空间。</p>
-          </article>
-        </div>
-      </section>
+      <section id="about" class="section" data-reveal data-section="about"></section>
 
-      <section id="credits" class="section" data-reveal>
-        <p class="eyebrow">Image Credits</p>
-        <h2>图片来源说明</h2>
-        <p class="section-copy">
-          页面中的部分真实产品图来自 Wikimedia Commons，并已下载为本地图片供页面使用。其余产品仍使用项目内统一生成的风格海报图，以保证整体完整度和加载性能。
-        </p>
-        <div class="notes">
-          <article class="note-card">
-            <h3>已接入真实图</h3>
-            <p>Corona Extra、Hoegaarden White、Asahi Super Dry、Paulaner Hefe-Weissbier、Guinness Draught、Heineken、Budweiser、Stella Artois、Carlsberg、Kirin、Sapporo、Pilsner Urquell、Erdinger、Leffe Blonde、Bitburger。</p>
-          </article>
-          <article class="note-card">
-            <h3>来源页</h3>
-            <p><a href="https://commons.wikimedia.org/wiki/File:Corona_Extra_beer_bottle_(2019).png" target="_blank" rel="noreferrer">Corona Extra</a></p>
-            <p><a href="https://commons.wikimedia.org/wiki/File:Hoegaarden_bottle.JPG" target="_blank" rel="noreferrer">Hoegaarden White</a></p>
-            <p><a href="https://commons.wikimedia.org/wiki/File:Asahi_Super_Dry.jpg" target="_blank" rel="noreferrer">Asahi Super Dry</a></p>
-            <p><a href="https://commons.wikimedia.org/wiki/File:Paulaner_Hefe-Weissbier.JPG" target="_blank" rel="noreferrer">Paulaner Hefe-Weissbier</a></p>
-            <p><a href="https://commons.wikimedia.org/wiki/File:Carlsberg_(bottle).jpg" target="_blank" rel="noreferrer">Carlsberg</a></p>
-            <p><a href="https://commons.wikimedia.org/wiki/File:Guinness_Draught.jpg" target="_blank" rel="noreferrer">Guinness Draught</a></p>
-            <p><a href="https://commons.wikimedia.org/wiki/File:Heineken_Bottle.JPG" target="_blank" rel="noreferrer">Heineken</a></p>
-            <p><a href="https://commons.wikimedia.org/wiki/File:Budweiser_Bottle.jpg" target="_blank" rel="noreferrer">Budweiser</a></p>
-            <p><a href="https://commons.wikimedia.org/wiki/File:Stella_Artois_bottle.jpg" target="_blank" rel="noreferrer">Stella Artois</a></p>
-            <p><a href="https://commons.wikimedia.org/wiki/File:Kirin_Beer.jpg" target="_blank" rel="noreferrer">Kirin</a></p>
-            <p><a href="https://commons.wikimedia.org/wiki/File:A_Bottle_of_Sapporo_Beer.jpg" target="_blank" rel="noreferrer">Sapporo</a></p>
-            <p><a href="https://commons.wikimedia.org/wiki/File:Pilsner_Urquell_330mL_Bottle.jpg" target="_blank" rel="noreferrer">Pilsner Urquell</a></p>
-            <p><a href="https://commons.wikimedia.org/wiki/File:Erdinger_weissbrau.jpg" target="_blank" rel="noreferrer">Erdinger</a></p>
-            <p><a href="https://commons.wikimedia.org/wiki/File:LeffeBlond.jpg" target="_blank" rel="noreferrer">Leffe Blonde</a></p>
-            <p><a href="https://commons.wikimedia.org/wiki/File:Bitburger_Pils.jpg" target="_blank" rel="noreferrer">Bitburger</a></p>
-          </article>
-          <article class="note-card">
-            <h3>继续扩充</h3>
-            <p>完整清单维护在项目文档中。后续继续补图时，会优先选择带明确许可证与来源页的公共图库素材，而不是直接热链电商图。</p>
-          </article>
-        </div>
-      </section>
+      <section id="credits" class="section" data-reveal data-section="credits"></section>
     </main>
-
-<!--    <footer class="site-footer shell">-->
-<!--      <p>-->
-<!--        夏日啤酒选择指南 · 首版精选库。适合做静态部署，也适合作为后续扩展全球品牌索引的前端基础。-->
-<!--      </p>-->
-<!--    </footer>-->
 
     <script src="./data.global.js"></script>
     <script src="./app.global.js"></script>
-    <script>
-      window.BeerGuideApp.initBeerGuide(window.BeerGuideData.beers);
-    </script>
   </body>
 </html>

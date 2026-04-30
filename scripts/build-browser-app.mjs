@@ -13,7 +13,7 @@ const transformed = source
   .replaceAll(/^export function /gm, "function ")
   .replaceAll(/^export const /gm, "const ");
 
-const output = `(function () {\n  "use strict";\n\n${transformed}\n\n  window.BeerGuideApp = { initBeerGuide };\n})();\n`;
+const output = `(function () {\n  "use strict";\n\n${transformed}\n\n  window.BeerGuideApp = { initBeerGuide, bootBeerGuide };\n})();\n`;
 
 await fs.writeFile(outputPath, output, "utf8");
 console.log(`wrote ${outputPath}`);
