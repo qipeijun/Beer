@@ -10,6 +10,8 @@ const DEFAULT_FILTERS = {
   search: ""
 };
 
+const DEFAULT_SUMMARY = "从人群、口感、产地和价格带切入，快速找到适合夏天的那一杯。";
+
 function derivePriceBand(priceCny) {
   if (priceCny <= 10) return "平价";
   if (priceCny <= 18) return "日常";
@@ -67,7 +69,7 @@ function filterBeers(beers, filters = DEFAULT_FILTERS) {
   });
 }
 
-function summarizeSelection(filters = DEFAULT_FILTERS) {
+function summarizeSelection(filters = DEFAULT_FILTERS, defaultSummary = DEFAULT_SUMMARY) {
   const segments = [
     filters.crowd,
     filters.taste,
@@ -80,9 +82,7 @@ function summarizeSelection(filters = DEFAULT_FILTERS) {
     segments.push(`关键词"${filters.search.trim()}"`);
   }
 
-  return segments.length
-    ? `当前关注：${segments.join(" / ")}`
-    : "从人群、口感、产地和价格带切入，快速找到适合夏天的那一杯。";
+  return segments.length ? `当前关注：${segments.join(" / ")}` : defaultSummary;
 }
 
 function pickActiveBeer(results, currentId) {
@@ -91,14 +91,14 @@ function pickActiveBeer(results, currentId) {
 }
 
 function uniqueOptions(beers, key) {
-  return [...new Set(beers.flatMap((beer) => beer[key]))].sort((a, b) =>
-    a.localeCompare(b, "zh-Hans-CN"),
+  return [...new Set(beers.flatMap((beer) => beer[key]))].sort((left, right) =>
+    left.localeCompare(right, "zh-Hans-CN"),
   );
 }
 
 function uniqueFieldOptions(beers, key) {
-  return [...new Set(beers.map((beer) => beer[key]))].sort((a, b) =>
-    a.localeCompare(b, "zh-Hans-CN"),
+  return [...new Set(beers.map((beer) => beer[key]))].sort((left, right) =>
+    left.localeCompare(right, "zh-Hans-CN"),
   );
 }
 
@@ -153,8 +153,23 @@ function renderBeerCard(beer, isActive, index, animate) {
 
 function renderBeerDetail(beer) {
   const imageMeta = beer.imageKind === "real"
-    ? `<p class="detail-image-meta">图片状态：真实产品图${beer.imageSourcePage ? ` · <a href="${escapeHtml(beer.imageSourcePage)}" target="_blank" rel="noreferrer">来源页</a>` : ""}</p>`
-    : `<p class="detail-image-meta">图片状态：项目生成海报图，用于补齐未获得真实授权图的产品。</p>`;
+    ? `真实产品图${beer.imageSourcePage ? ` · <a href="${escapeHtml(beer.imageSourcePage)}" target="_blank" rel="noreferrer">来源页</a>` : ""}`
+    : "项目生成海报图，用于补齐未获得真实授权图的产品。";
+  const quickFacts = [
+    { label: "风格", value: `${beer.country} / ${beer.style}` },
+    { label: "参考价格", value: `¥${beer.priceCny} / ${beer.spec}` },
+    { label: "酒精度", value: formatAbv(beer.abv) },
+    { label: "适饮温度", value: beer.serveTemp }
+  ];
+  const serveFacts = [
+    { label: "推荐搭配", value: beer.pairing },
+    { label: "适合场景", value: beer.sceneTags.join(" / ") }
+  ];
+  const supportFacts = [
+    { label: "规格", value: beer.spec },
+    { label: "配料摘要", value: beer.ingredientsSummary },
+    { label: "图片说明", value: imageMeta, isHtml: true }
+  ];
   const gallery = beer.gallery?.length
     ? `
       <div class="detail-gallery">
@@ -171,29 +186,61 @@ function renderBeerDetail(beer) {
   return `
     <article class="detail-card">
       <div class="detail-media">
-        <img class="detail-image" src="${escapeHtml(beer.image)}" alt="${escapeHtml(`${beer.brand} ${beer.name}`)}" decoding="async" />
-        ${imageMeta}
-        ${gallery}
+        <div class="detail-media-frame">
+          <img class="detail-image" src="${escapeHtml(beer.image)}" alt="${escapeHtml(`${beer.brand} ${beer.name}`)}" decoding="async" />
+        </div>
+        ${gallery ? `<section class="detail-gallery-section" aria-label="场景补图"><p class="detail-kicker">Scene Notes</p>${gallery}</section>` : ""}
       </div>
       <div class="detail-copy">
-        <p class="eyebrow">Editor Detail</p>
-        <h3>${escapeHtml(beer.brand)} <span>${escapeHtml(beer.name)}</span></h3>
-        <p class="detail-lede">${escapeHtml(beer.description)}</p>
-        <div class="detail-tags">
-          ${beer.highlightTags.map((tag) => `<span class="chip">${escapeHtml(tag)}</span>`).join("")}
-        </div>
-        <dl class="detail-facts">
-          <div><dt>产地 / 风格</dt><dd>${escapeHtml(`${beer.country} / ${beer.style}`)}</dd></div>
-          <div><dt>参考价格</dt><dd>¥${escapeHtml(beer.priceCny)} / ${escapeHtml(beer.spec)}</dd></div>
-          <div><dt>推荐搭配</dt><dd>${escapeHtml(beer.pairing)}</dd></div>
-          <div><dt>适饮温度</dt><dd>${escapeHtml(beer.serveTemp)}</dd></div>
-          <div><dt>配料摘要</dt><dd>${escapeHtml(beer.ingredientsSummary)}</dd></div>
-          <div><dt>适合场景</dt><dd>${escapeHtml(beer.sceneTags.join(" / "))}</dd></div>
-        </dl>
-        <div class="detail-story">
-          <h4>为什么这支值得进名单</h4>
-          <p>${escapeHtml(beer.story)}</p>
-        </div>
+        <header class="detail-head">
+          <p class="eyebrow">Editor Detail</p>
+          <p class="detail-kicker">${escapeHtml(beer.style)} · ${escapeHtml(beer.country)}</p>
+          <h3 id="detail-title"><span class="detail-brand">${escapeHtml(beer.brand)}</span><span class="detail-name">${escapeHtml(beer.name)}</span></h3>
+          <p class="detail-lede">${escapeHtml(beer.tagline)}</p>
+          <div class="detail-tags">
+            ${beer.highlightTags.slice(0, 3).map((tag) => `<span class="detail-chip">${escapeHtml(tag)}</span>`).join("")}
+          </div>
+        </header>
+        <section class="detail-block detail-block-story" aria-label="推荐理由">
+          <p class="detail-block-label">Why It Works</p>
+          <h4>为什么这支值得喝</h4>
+          <p class="detail-story-copy">${escapeHtml(beer.description)}</p>
+          <p class="detail-story-note">${escapeHtml(beer.story)}</p>
+        </section>
+        <section class="detail-block detail-block-primary" aria-label="快速判断">
+          <p class="detail-block-label">Quick Read</p>
+          <h4>快速判断</h4>
+          <dl class="detail-facts detail-facts-primary">
+            ${quickFacts
+              .map(
+                (fact) => `<div><dt>${escapeHtml(fact.label)}</dt><dd>${escapeHtml(fact.value)}</dd></div>`,
+              )
+              .join("")}
+          </dl>
+        </section>
+        <section class="detail-block detail-block-serve" aria-label="怎么喝更对">
+          <p class="detail-block-label">How To Drink</p>
+          <h4>怎么喝更对</h4>
+          <dl class="detail-facts detail-facts-secondary">
+            ${serveFacts
+              .map(
+                (fact) => `<div><dt>${escapeHtml(fact.label)}</dt><dd>${escapeHtml(fact.value)}</dd></div>`,
+              )
+              .join("")}
+          </dl>
+        </section>
+        <section class="detail-block detail-block-support" aria-label="补充信息">
+          <p class="detail-block-label">Details</p>
+          <h4>补充信息</h4>
+          <dl class="detail-facts detail-facts-secondary">
+            ${supportFacts
+              .map((fact) => {
+                const value = fact.isHtml ? fact.value : escapeHtml(fact.value);
+                return `<div><dt>${escapeHtml(fact.label)}</dt><dd>${value}</dd></div>`;
+              })
+              .join("")}
+          </dl>
+        </section>
       </div>
     </article>
   `;
@@ -247,6 +294,40 @@ function renderEditorials(beers) {
     .join("");
 }
 
+function renderSectionCard(item) {
+  const body = item.body ? `<p>${escapeHtml(item.body)}</p>` : "";
+  const links = item.links?.length
+    ? item.links
+      .map(
+        (link) =>
+          `<p><a href="${escapeHtml(link.href)}" target="_blank" rel="noreferrer">${escapeHtml(link.label)}</a></p>`,
+      )
+      .join("")
+    : "";
+
+  return `
+    <article class="note-card">
+      <h3>${escapeHtml(item.title)}</h3>
+      ${body}
+      ${links}
+    </article>
+  `;
+}
+
+function renderInfoSection(section) {
+  const intro = section.intro ? `<p class="section-copy">${escapeHtml(section.intro)}</p>` : "";
+  const items = section.items?.length
+    ? `<div class="notes">${section.items.map(renderSectionCard).join("")}</div>`
+    : "";
+
+  return `
+    <p class="eyebrow">${escapeHtml(section.eyebrow)}</p>
+    <h2>${escapeHtml(section.title)}</h2>
+    ${intro}
+    ${items}
+  `;
+}
+
 function populateFilters(beers, form) {
   form.elements.crowd.innerHTML = createSelectOptions(uniqueOptions(beers, "crowdTags"));
   form.elements.taste.innerHTML = createSelectOptions(uniqueOptions(beers, "tasteTags"));
@@ -266,53 +347,118 @@ function readFilters(form) {
   };
 }
 
-function updateView(beers, filters, state, nodes, mobileCount) {
+function renderInfoSections(sections) {
+  sections.forEach((section) => {
+    const node = document.querySelector(`[data-section="${section.id}"]`);
+    if (node) node.innerHTML = renderInfoSection(section);
+  });
+}
+
+function updateView(beers, filters, state, nodes, meta = {}, options = {}) {
   const results = filterBeers(beers, filters);
   const activeBeer = pickActiveBeer(results, state.activeId);
   state.activeId = activeBeer?.id ?? null;
 
   nodes.count.textContent = `${results.length}`;
-  if (mobileCount) mobileCount.textContent = `${results.length}`;
-  nodes.summary.textContent = summarizeSelection(filters);
+  if (nodes.mobileCount) nodes.mobileCount.textContent = `${results.length}`;
+  nodes.summary.textContent = summarizeSelection(filters, meta.defaultSummary ?? DEFAULT_SUMMARY);
 
-  // Crossfade grid
-  nodes.grid.classList.add("is-updating");
-  requestAnimationFrame(() => {
-    setTimeout(() => {
-      const animate = !state.rendered;
-      state.rendered = true;
-      nodes.grid.innerHTML = results.length
-        ? results.map((beer, i) => renderBeerCard(beer, beer.id === state.activeId, i, animate)).join("")
-        : `
-          <article class="empty-state">
-            <h3>这组条件下还没有匹配结果</h3>
-            <p>试试先放宽一个条件，或者搜索"白啤""IPA""日本"等关键词。</p>
-          </article>
-        `;
-      nodes.grid.classList.remove("is-updating");
-    }, 100);
-  });
+  const renderGrid = () => {
+    const animate = !state.rendered && !options.disableGridAnimation;
+    state.rendered = true;
+    nodes.grid.innerHTML = results.length
+      ? results.map((beer, index) => renderBeerCard(beer, beer.id === state.activeId, index, animate)).join("")
+      : `
+        <article class="empty-state">
+          <h3>这组条件下还没有匹配结果</h3>
+          <p>试试先放宽一个条件，或者搜索"白啤""IPA""日本"等关键词。</p>
+        </article>
+      `;
+  };
 
-  // Crossfade detail
-  nodes.detail.classList.add("is-updating");
-  requestAnimationFrame(() => {
-    setTimeout(() => {
-      nodes.detail.innerHTML = activeBeer
-        ? renderBeerDetail(activeBeer)
-        : `
-          <article class="empty-state">
-            <h3>暂无可展示详情</h3>
-            <p>调整一下筛选条件，重新选择一支更适合当前场景的啤酒。</p>
-          </article>
-        `;
-      nodes.detail.classList.remove("is-updating");
-    }, 100);
-  });
+  const renderDetail = () => {
+    nodes.detail.innerHTML = activeBeer
+      ? renderBeerDetail(activeBeer)
+      : `
+        <article class="empty-state">
+          <h3>暂无可展示详情</h3>
+          <p>调整一下筛选条件，重新选择一支更适合当前场景的啤酒。</p>
+        </article>
+      `;
+  };
+
+  if (options.instant || options.disableGridAnimation || state.isDetailOpen) {
+    renderGrid();
+  } else {
+    nodes.grid.classList.add("is-updating");
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        renderGrid();
+        nodes.grid.classList.remove("is-updating");
+      }, 100);
+    });
+  }
+
+  if (options.instantDetail) {
+    renderDetail();
+  } else {
+    nodes.detail.classList.add("is-updating");
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        renderDetail();
+        nodes.detail.classList.remove("is-updating");
+      }, 100);
+    });
+  }
 }
 
-function initBeerGuide(beers) {
-  if (typeof document === "undefined") return;
+function normalizeConfig(config) {
+  if (Array.isArray(config)) {
+    return { beers: config, sections: [], meta: {} };
+  }
 
+  return {
+    beers: Array.isArray(config?.beers) ? config.beers : [],
+    sections: Array.isArray(config?.sections) ? config.sections : [],
+    meta: config?.meta && typeof config.meta === "object" ? config.meta : {}
+  };
+}
+
+function showStatus(statusNode, message) {
+  if (!statusNode) return;
+  statusNode.hidden = false;
+  statusNode.textContent = message;
+}
+
+function hideStatus(statusNode) {
+  if (!statusNode) return;
+  statusNode.hidden = true;
+  statusNode.textContent = "";
+}
+
+function isDialogOpen(dialog) {
+  return Boolean(dialog?.open || dialog?.hasAttribute("open"));
+}
+
+function focusWithoutScroll(node) {
+  if (!node || typeof node.focus !== "function") return;
+
+  try {
+    node.focus({ preventScroll: true });
+  } catch {
+    node.focus();
+  }
+}
+
+function restoreWindowScroll(scrollY) {
+  if (typeof window === "undefined" || typeof scrollY !== "number") return;
+  window.scrollTo({ top: scrollY, behavior: "auto" });
+}
+
+function initBeerGuide(config) {
+  if (typeof document === "undefined") return false;
+
+  const { beers, sections, meta } = normalizeConfig(config);
   const form = document.querySelector("[data-filter-form]");
   const grid = document.querySelector("[data-results]");
   const detail = document.querySelector("[data-detail]");
@@ -322,49 +468,121 @@ function initBeerGuide(beers) {
   const editorials = document.querySelector("[data-editorials]");
   const reset = document.querySelector("[data-reset]");
   const total = document.querySelector("[data-total-count]");
+  const countryCount = document.querySelector("[data-country-count]");
+  const dimensionCount = document.querySelector("[data-dimension-count]");
   const filterToggle = document.querySelector("[data-filter-toggle]");
   const mobileCount = document.querySelector("[data-mobile-count]");
-  const detailShell = document.querySelector(".detail-shell");
-  const detailBackdrop = document.querySelector("[data-detail-backdrop]");
+  const detailDialog = document.querySelector("[data-detail-dialog]");
   const detailClose = document.querySelector("[data-detail-close]");
+  const statusNode = document.querySelector("[data-app-status]");
 
-  if (!form || !grid || !detail || !count || !summary || !quickPicks || !editorials || !reset) {
-    return;
+  if (!form || !grid || !detail || !count || !summary || !quickPicks || !editorials || !reset || !detailDialog) {
+    return false;
   }
 
+  if (!beers.length) {
+    showStatus(statusNode, meta.bootErrorMessage ?? "页面数据暂时不可用，请稍后再试。");
+    return false;
+  }
+
+  hideStatus(statusNode);
+  renderInfoSections(sections);
   populateFilters(beers, form);
   quickPicks.innerHTML = renderHighlights(beers);
   editorials.innerHTML = renderEditorials(beers);
+
   if (total) total.textContent = `${beers.length}`;
-
-  const state = { activeId: beers[0]?.id ?? null };
-  const applyFilters = () => updateView(beers, readFilters(form), state, { grid, detail, count, summary }, mobileCount);
-
-  // Save original parent for portal round-trip
-  const detailShellParent = detailShell ? detailShell.parentNode : null;
-  const detailBackdropParent = detailBackdrop ? detailBackdrop.parentNode : null;
-
-  function openDetail() {
-    if (!detailShell) return;
-    // Portal to body so position:fixed centers on viewport
-    document.body.appendChild(detailBackdrop);
-    document.body.appendChild(detailShell);
-    detailBackdrop.classList.add("is-visible");
-    detailShell.classList.add("is-open");
-    requestAnimationFrame(() => detailShell.classList.add("is-visible"));
+  if (countryCount) {
+    const resolvedCountryCount = meta.countryCount ?? new Set(beers.map((beer) => beer.country)).size;
+    countryCount.textContent = `${resolvedCountryCount}`;
+  }
+  if (dimensionCount) {
+    dimensionCount.textContent = `${meta.decisionDimensions ?? 5}`;
   }
 
-  function closeDetail() {
-    if (!detailShell) return;
-    detailShell.classList.remove("is-visible");
-    detailBackdrop.classList.remove("is-visible");
-    setTimeout(() => {
-      detailShell.classList.remove("is-open");
-      // Move back to original parent
-      if (detailShellParent) detailShellParent.appendChild(detailShell);
-      if (detailBackdropParent) detailBackdropParent.appendChild(detailBackdrop);
-    }, 300);
-  }
+  const state = {
+    activeId: beers[0]?.id ?? null,
+    rendered: false,
+    isDetailOpen: false,
+    lastTrigger: null,
+    detailTransitionState: "closed",
+    detailCloseTimer: null,
+    pageScrollY: 0
+  };
+
+  const applyFilters = (options = {}) =>
+    updateView(beers, readFilters(form), state, { grid, detail, count, summary, mobileCount }, meta, options);
+
+  const setDetailTransitionState = (value) => {
+    state.detailTransitionState = value;
+    detailDialog.dataset.state = value;
+    document.body.dataset.detailState = value;
+    document.body.classList.toggle("has-detail-open", value === "opening" || value === "open");
+    document.body.classList.toggle("has-detail-transition", value === "opening" || value === "closing");
+    grid.classList.toggle("is-detail-active", value === "opening" || value === "open");
+  };
+
+  const closeDetail = ({ returnFocus = true } = {}) => {
+    if (!isDialogOpen(detailDialog)) return;
+
+    state.isDetailOpen = false;
+    setDetailTransitionState("closing");
+
+    window.clearTimeout(state.detailCloseTimer);
+    detailDialog.classList.remove("is-open");
+
+    state.detailCloseTimer = window.setTimeout(() => {
+      if (typeof detailDialog.close === "function" && detailDialog.open) {
+        detailDialog.close();
+      } else {
+        detailDialog.removeAttribute("open");
+      }
+
+      setDetailTransitionState("closed");
+
+      if (returnFocus && state.lastTrigger?.isConnected) {
+        focusWithoutScroll(state.lastTrigger);
+        state.lastTrigger.scrollIntoView({ block: "nearest", inline: "nearest" });
+      }
+    }, 180);
+  };
+
+  const openDetail = (beerId, trigger) => {
+    state.pageScrollY = window.scrollY;
+
+    if (beerId) state.activeId = beerId;
+
+    if (trigger instanceof HTMLElement) {
+      state.lastTrigger = trigger;
+    }
+
+    applyFilters({ instantDetail: true, disableGridAnimation: true });
+
+    if (!state.activeId) return;
+
+    window.clearTimeout(state.detailCloseTimer);
+
+    if (typeof detailDialog.showModal === "function" && !detailDialog.open) {
+      detailDialog.showModal();
+    } else {
+      detailDialog.setAttribute("open", "");
+    }
+
+    restoreWindowScroll(state.pageScrollY);
+
+    state.isDetailOpen = true;
+    setDetailTransitionState("opening");
+
+    requestAnimationFrame(() => {
+      restoreWindowScroll(state.pageScrollY);
+      detailDialog.classList.add("is-open");
+      requestAnimationFrame(() => {
+        restoreWindowScroll(state.pageScrollY);
+        setDetailTransitionState("open");
+        focusWithoutScroll(detailClose);
+      });
+    });
+  };
 
   form.addEventListener("input", applyFilters);
   reset.addEventListener("click", () => {
@@ -375,6 +593,7 @@ function initBeerGuide(beers) {
   quickPicks.addEventListener("click", (event) => {
     const trigger = event.target.closest("[data-crowd]");
     if (!trigger) return;
+
     form.elements.crowd.value = trigger.dataset.crowd;
     applyFilters();
     document.querySelector("#catalogue")?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -382,42 +601,45 @@ function initBeerGuide(beers) {
   grid.addEventListener("click", (event) => {
     const card = event.target.closest("[data-beer-id]");
     if (!card) return;
-    state.activeId = card.dataset.beerId;
-    applyFilters();
-    openDetail();
+    openDetail(card.dataset.beerId, card);
   });
   grid.addEventListener("keydown", (event) => {
     if (event.key !== "Enter" && event.key !== " ") return;
+
     const card = event.target.closest("[data-beer-id]");
     if (!card) return;
+
     event.preventDefault();
-    state.activeId = card.dataset.beerId;
-    applyFilters();
-    openDetail();
+    openDetail(card.dataset.beerId, card);
   });
 
-  if (detailClose) detailClose.addEventListener("click", closeDetail);
-  if (detailBackdrop) detailBackdrop.addEventListener("click", closeDetail);
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") closeDetail();
+  detailClose?.addEventListener("click", () => closeDetail());
+  detailDialog.addEventListener("cancel", (event) => {
+    event.preventDefault();
+    closeDetail();
+  });
+  detailDialog.addEventListener("click", (event) => {
+    if (event.target === detailDialog) closeDetail();
   });
 
-  // Mobile filter toggle
-  if (filterToggle && form) {
+  if (filterToggle) {
     if (window.innerWidth <= 720) {
       form.classList.add("is-collapsed");
+      filterToggle.setAttribute("aria-expanded", "false");
+    } else {
+      filterToggle.setAttribute("aria-expanded", "true");
     }
 
     filterToggle.addEventListener("click", () => {
       const isCollapsed = form.classList.toggle("is-collapsed");
       filterToggle.setAttribute("aria-expanded", String(!isCollapsed));
+
       if (!isCollapsed) {
         form.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     });
   }
 
-  // Scroll reveal
   const revealSections = document.querySelectorAll("[data-reveal]");
   if (revealSections.length) {
     const observer = new IntersectionObserver(
@@ -431,32 +653,84 @@ function initBeerGuide(beers) {
       },
       { threshold: 0.12 }
     );
-    revealSections.forEach((el) => observer.observe(el));
+
+    revealSections.forEach((element) => observer.observe(element));
   }
 
-  // Touch swipe for mobile card navigation
   let touchStartX = 0;
-  grid.addEventListener("touchstart", (e) => {
-    touchStartX = e.changedTouches[0].screenX;
-  }, { passive: true });
-  grid.addEventListener("touchend", (e) => {
-    const diff = e.changedTouches[0].screenX - touchStartX;
-    if (Math.abs(diff) < 60) return;
-    const cards = [...grid.querySelectorAll("[data-beer-id]")];
-    const currentIdx = cards.findIndex((c) => c.dataset.beerId === state.activeId);
-    const nextIdx = diff < 0
-      ? Math.min(currentIdx + 1, cards.length - 1)
-      : Math.max(currentIdx - 1, 0);
-    if (cards[nextIdx]) {
-      state.activeId = cards[nextIdx].dataset.beerId;
-      applyFilters();
-      cards[nextIdx].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
-    }
-  }, { passive: true });
+  grid.addEventListener(
+    "touchstart",
+    (event) => {
+      touchStartX = event.changedTouches[0].screenX;
+    },
+    { passive: true },
+  );
+  grid.addEventListener(
+    "touchend",
+    (event) => {
+      const diff = event.changedTouches[0].screenX - touchStartX;
+      if (Math.abs(diff) < 60) return;
+
+      const cards = [...grid.querySelectorAll("[data-beer-id]")];
+      const currentIndex = cards.findIndex((card) => card.dataset.beerId === state.activeId);
+      const nextIndex = diff < 0
+        ? Math.min(currentIndex + 1, cards.length - 1)
+        : Math.max(currentIndex - 1, 0);
+
+      if (cards[nextIndex]) {
+        state.activeId = cards[nextIndex].dataset.beerId;
+        applyFilters();
+        cards[nextIndex].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+      }
+    },
+    { passive: true },
+  );
 
   applyFilters();
+  setDetailTransitionState("closed");
+  return true;
+}
+
+function bootBeerGuide(payload = window.BeerGuideData) {
+  if (typeof document === "undefined") return false;
+
+  const statusNode = document.querySelector("[data-app-status]");
+  const config = normalizeConfig({
+    beers: payload?.beers,
+    sections: payload?.pageSections ?? payload?.sections,
+    meta: payload?.pageMeta ?? payload?.meta
+  });
+
+  if (!config.beers.length) {
+    showStatus(
+      statusNode,
+      config.meta.bootErrorMessage ?? "页面数据暂时不可用，请稍后刷新，或检查本地数据文件是否完整。",
+    );
+    return false;
+  }
+
+  try {
+    return initBeerGuide(config);
+  } catch (error) {
+    console.error(error);
+    showStatus(
+      statusNode,
+      config.meta.bootErrorMessage ?? "页面初始化失败，请稍后刷新后重试。",
+    );
+    return false;
+  }
+}
+
+if (typeof window !== "undefined" && typeof document !== "undefined") {
+  const start = () => bootBeerGuide(window.BeerGuideData);
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", start, { once: true });
+  } else {
+    start();
+  }
 }
 
 
-  window.BeerGuideApp = { initBeerGuide };
+  window.BeerGuideApp = { initBeerGuide, bootBeerGuide };
 })();

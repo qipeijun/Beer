@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 
-import { beers } from "../src/data.js";
+import { beers, pageSections, pageMeta } from "../src/data.js";
 import {
   filterBeers,
   derivePriceBand,
@@ -132,12 +132,52 @@ test("pickActiveBeer preserves selection when possible and falls back to first r
   assert.equal(pickActiveBeer([], second.id), null);
 });
 
+test("content sections are data-driven and credits links are structured", () => {
+  assert.equal(pageSections.length, 3);
+  assert.deepEqual(
+    pageSections.map((section) => section.id),
+    ["notes", "about", "credits"],
+  );
+
+  const credits = pageSections.find((section) => section.id === "credits");
+  assert.ok(credits, "credits section should exist");
+  assert.ok(
+    credits.items.some((item) => Array.isArray(item.links) && item.links.length > 0),
+    "credits section should include structured source links",
+  );
+  assert.equal(pageMeta.countryCount, new Set(beers.map((beer) => beer.country)).size);
+  assert.equal(pageMeta.decisionDimensions, 5);
+});
+
 test("index.html boots with classic scripts so it can open directly from the filesystem", () => {
   const html = fs.readFileSync(new URL("../index.html", import.meta.url), "utf8");
 
   assert.doesNotMatch(html, /type="module"/);
   assert.match(html, /src="\.\/data\.global\.js"/);
   assert.match(html, /src="\.\/app\.global\.js"/);
+  assert.doesNotMatch(html, /initBeerGuide\(window\.BeerGuideData\.beers\)/);
+  assert.match(html, /data-section="notes"/);
+  assert.match(html, /data-detail-dialog/);
+});
+
+test("detail surface keeps modal entrypoints while using the new grouped detail layout", () => {
+  const appSource = fs.readFileSync(new URL("../src/app.js", import.meta.url), "utf8");
+  const stylesSource = fs.readFileSync(new URL("../styles.css", import.meta.url), "utf8");
+
+  assert.match(appSource, /setDetailTransitionState/);
+  assert.match(appSource, /focusWithoutScroll/);
+  assert.match(appSource, /preventScroll: true/);
+  assert.match(appSource, /restoreWindowScroll/);
+  assert.match(appSource, /window\.scrollY/);
+  assert.match(appSource, /detail-facts-primary/);
+  assert.match(appSource, /detail-block-story/);
+  assert.match(appSource, /detail-brand/);
+  assert.match(appSource, /detail-chip/);
+  assert.match(appSource, /How To Drink/);
+  assert.match(stylesSource, /\.guide-grid\.is-detail-active \.beer-card/);
+  assert.match(stylesSource, /\.detail-dialog \[data-detail\]/);
+  assert.match(stylesSource, /\.detail-media-frame/);
+  assert.match(stylesSource, /\.detail-facts-primary \{/);
 });
 
 test("vercel deployment declares the project root as the output directory", () => {
