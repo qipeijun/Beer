@@ -216,6 +216,25 @@ test("styles define cinematic hero, scene cards, and upgraded catalogue chrome",
   assert.match(stylesSource, /\.catalogue-status\b/);
 });
 
+test("styles keep premium desktop flow and mobile ergonomics aligned", () => {
+  const stylesSource = fs.readFileSync(new URL("../styles.css", import.meta.url), "utf8");
+
+  assert.match(stylesSource, /\.section\[data-section\]\s*\{/);
+  assert.match(stylesSource, /\.section\[data-section\]\s+\.note-card\b/);
+  assert.match(
+    stylesSource,
+    /@media \(max-width: 720px\)[\s\S]*\.scene-picks\s*\{[\s\S]*grid-auto-flow:\s*column/i,
+  );
+  assert.match(
+    stylesSource,
+    /@media \(max-width: 720px\)[\s\S]*\.hero-actions\s*\{[\s\S]*grid-template-columns:\s*1fr/i,
+  );
+  assert.match(
+    stylesSource,
+    /@media \(max-width: 720px\)[\s\S]*\.filter-toggle\s*\{[\s\S]*bottom:\s*max\(/i,
+  );
+});
+
 test("detail surface keeps modal entrypoints while using the new grouped detail layout", () => {
   const appSource = fs.readFileSync(new URL("../src/app.js", import.meta.url), "utf8");
   const stylesSource = fs.readFileSync(new URL("../styles.css", import.meta.url), "utf8");
