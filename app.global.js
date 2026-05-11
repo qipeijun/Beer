@@ -203,6 +203,7 @@ function renderScenePicks(presets, activePresetId = "") {
           type="button"
           data-scene-preset="${escapeHtml(preset.id)}"
           aria-pressed="${isActive}"
+          aria-current="${isActive ? "true" : "false"}"
         >
           <img src="${escapeHtml(preset.beer.image)}" alt="${escapeHtml(`${preset.beer.brand} ${preset.beer.name}`)}" loading="lazy" decoding="async" />
           <strong>${escapeHtml(preset.title)}</strong>
@@ -589,6 +590,16 @@ function restoreWindowScroll(scrollY) {
   window.scrollTo({ top: scrollY, behavior: "auto" });
 }
 
+function syncCardInteractionState(grid, nextCard, className) {
+  const currentCard = grid.querySelector(`.beer-card.${className}`);
+  if (currentCard && currentCard !== nextCard) currentCard.classList.remove(className);
+  if (nextCard) {
+    nextCard.classList.add(className);
+  } else if (currentCard) {
+    currentCard.classList.remove(className);
+  }
+}
+
 function initBeerGuide(config) {
   if (typeof document === "undefined") return false;
 
@@ -815,6 +826,33 @@ function initBeerGuide(config) {
       if (!targetId) return;
       document.querySelector(`#${targetId}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
+  });
+
+  grid.addEventListener("pointerover", (event) => {
+    const card = event.target.closest("[data-beer-id]");
+    syncCardInteractionState(grid, card, "is-hovered");
+  });
+  grid.addEventListener("pointerout", (event) => {
+    if (event.relatedTarget && grid.contains(event.relatedTarget)) return;
+    syncCardInteractionState(grid, null, "is-hovered");
+  });
+  grid.addEventListener("focusin", (event) => {
+    const card = event.target.closest("[data-beer-id]");
+    syncCardInteractionState(grid, card, "is-hovered");
+  });
+  grid.addEventListener("focusout", (event) => {
+    if (event.relatedTarget && grid.contains(event.relatedTarget)) return;
+    syncCardInteractionState(grid, null, "is-hovered");
+  });
+  grid.addEventListener("pointerdown", (event) => {
+    const card = event.target.closest("[data-beer-id]");
+    syncCardInteractionState(grid, card, "is-pressed");
+  });
+  grid.addEventListener("pointerup", () => {
+    syncCardInteractionState(grid, null, "is-pressed");
+  });
+  grid.addEventListener("pointercancel", () => {
+    syncCardInteractionState(grid, null, "is-pressed");
   });
 
   const revealSections = document.querySelectorAll("[data-reveal]");
