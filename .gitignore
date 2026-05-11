@@ -1,6 +1,9 @@
 /.idea/
 /.playwright-mcp/
 /.superpowers/
-/.idea/
 /.codex/
 /tests/
+
+# Debug screenshots & design previews
+/beer-*.png
+/design-preview.*
