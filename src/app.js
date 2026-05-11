@@ -82,6 +82,14 @@ export function summarizeSelection(filters = DEFAULT_FILTERS, defaultSummary = D
   return segments.length ? `当前关注：${segments.join(" / ")}` : defaultSummary;
 }
 
+export function getScenePresets(beers) {
+  return [];
+}
+
+export function summarizeCatalogueStatus() {
+  return "";
+}
+
 export function pickActiveBeer(results, currentId) {
   if (!results.length) return null;
   return results.find((beer) => beer.id === currentId) ?? results[0];

@@ -9,6 +9,8 @@ import {
   derivePriceBand,
   pickActiveBeer,
   summarizeSelection,
+  summarizeCatalogueStatus,
+  getScenePresets,
 } from "../src/app.js";
 
 test("beer dataset contains enough curated entries with required fields", () => {
@@ -160,6 +162,17 @@ test("index.html boots with classic scripts so it can open directly from the fil
   assert.match(html, /data-detail-dialog/);
 });
 
+test("index.html exposes cinematic hero, scene picks, and upgraded filter shell", () => {
+  const html = fs.readFileSync(new URL("../index.html", import.meta.url), "utf8");
+
+  assert.match(html, /data-hero-stage/);
+  assert.match(html, /data-scene-picks/);
+  assert.match(html, /data-scroll-target="catalogue"/);
+  assert.match(html, /data-filter-summary/);
+  assert.match(html, /data-catalogue-status/);
+  assert.doesNotMatch(html, /hero-panel/);
+});
+
 test("detail surface keeps modal entrypoints while using the new grouped detail layout", () => {
   const appSource = fs.readFileSync(new URL("../src/app.js", import.meta.url), "utf8");
   const stylesSource = fs.readFileSync(new URL("../styles.css", import.meta.url), "utf8");
@@ -178,6 +191,32 @@ test("detail surface keeps modal entrypoints while using the new grouped detail 
   assert.match(stylesSource, /\.detail-dialog \[data-detail\]/);
   assert.match(stylesSource, /\.detail-media-frame/);
   assert.match(stylesSource, /\.detail-facts-primary \{/);
+});
+
+test("scene presets map to real filter values without fallback guessing", () => {
+  const presets = getScenePresets(beers);
+
+  assert.equal(presets.length, 4);
+  assert.ok(presets.every((preset) => preset.filters.crowd || preset.filters.taste));
+  assert.ok(presets.every((preset) => preset.beerId));
+});
+
+test("catalogue status copy reflects result count and active filters", () => {
+  const copy = summarizeCatalogueStatus(
+    {
+      crowd: "入门友好",
+      taste: "清爽",
+      country: "全部",
+      style: "全部",
+      priceBand: "全部",
+      search: "",
+    },
+    3,
+  );
+
+  assert.match(copy, /3/);
+  assert.match(copy, /入门友好/);
+  assert.match(copy, /清爽/);
 });
 
 test("vercel deployment declares the project root as the output directory", () => {
