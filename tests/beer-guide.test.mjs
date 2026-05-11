@@ -236,6 +236,28 @@ test("detail surface keeps modal entrypoints while using the new grouped detail 
   assert.match(stylesSource, /\.detail-facts-primary \{/);
 });
 
+test("detail and catalogue source keep cinematic interaction hooks", () => {
+  const appSource = fs.readFileSync(new URL("../src/app.js", import.meta.url), "utf8");
+  const stylesSource = fs.readFileSync(new URL("../styles.css", import.meta.url), "utf8");
+
+  assert.match(appSource, /data-filter-summary/);
+  assert.match(appSource, /data-catalogue-status/);
+  assert.match(appSource, /data-scene-preset/);
+  assert.match(appSource, /data-scroll-target/);
+  assert.match(appSource, /filterSummary\.textContent = summarizeSelection/);
+  assert.match(appSource, /catalogueStatus\.textContent = summarizeCatalogueStatus/);
+  assert.match(appSource, /trigger\.dataset\.scenePreset/);
+  assert.match(appSource, /detailDialog\.dataset\.state = value/);
+
+  assert.match(stylesSource, /\.beer-card:hover/);
+  assert.match(stylesSource, /\.section\[data-reveal\]\.is-visible/);
+  assert.match(stylesSource, /\.detail-dialog\.is-open/);
+  assert.match(stylesSource, /\.beer-card\.is-hovered/);
+  assert.match(stylesSource, /\.beer-card\.is-pressed/);
+  assert.match(stylesSource, /\.detail-dialog\[data-state="opening"\]/);
+  assert.match(stylesSource, /\.detail-dialog\[data-state="closing"\]/);
+});
+
 test("scene presets are backed by real beers and real filters", () => {
   const presets = getScenePresets(beers);
   const beerIds = new Set(beers.map((beer) => beer.id));

@@ -543,6 +543,10 @@ h4 {
   box-shadow: var(--shadow-glow);
 }
 
+.quick-pick[aria-current="true"] {
+  transform: translateY(-4px);
+}
+
 .feature-strip,
 .filters,
 .guide-grid article,
@@ -749,6 +753,7 @@ h4 {
 }
 
 .beer-card:hover,
+.beer-card.is-hovered,
 .beer-card:focus-visible {
   transform: translateY(-6px);
   border-color: rgba(216, 163, 94, 0.3);
@@ -757,9 +762,14 @@ h4 {
 }
 
 .beer-card:hover::before,
+.beer-card.is-hovered::before,
 .beer-card:focus-visible::before,
 .beer-card.is-active::before {
   opacity: 1;
+}
+
+.beer-card.is-pressed {
+  transform: translateY(-2px) scale(0.988);
 }
 
 .beer-card.is-active {
@@ -934,6 +944,16 @@ h4 {
 .detail-dialog.is-open {
   opacity: 1;
   transform: translate(-50%, -50%) scale(1);
+}
+
+.detail-dialog[data-state="opening"] {
+  opacity: 1;
+  transform: translate(-50%, calc(-50% + 2px)) scale(0.996);
+}
+
+.detail-dialog[data-state="closing"] {
+  opacity: 0;
+  transform: translate(-50%, calc(-50% + 18px)) scale(0.978);
 }
 
 .detail-dialog::backdrop {
@@ -1188,6 +1208,12 @@ body.has-detail-transition [data-reveal] {
   transition-duration: 120ms;
 }
 
+.section[data-reveal].is-visible .quick-pick,
+.section[data-reveal].is-visible .scene-card,
+.section[data-reveal].is-visible .beer-card {
+  animation-duration: calc(var(--duration-enter) - 120ms);
+}
+
 .filter-toggle {
   display: none;
   align-items: center;
@@ -1334,6 +1360,14 @@ body.has-detail-transition [data-reveal] {
 
   .detail-dialog.is-open {
     transform: translateY(0);
+  }
+
+  .detail-dialog[data-state="opening"] {
+    transform: translateY(4px);
+  }
+
+  .detail-dialog[data-state="closing"] {
+    transform: translateY(22px);
   }
 
   .detail-dialog .detail-close {
