@@ -13,6 +13,15 @@ import {
   getScenePresets,
 } from "../src/app.js";
 
+const DEFAULT_FILTERS = {
+  crowd: "全部",
+  taste: "全部",
+  country: "全部",
+  style: "全部",
+  priceBand: "全部",
+  search: "",
+};
+
 test("beer dataset contains enough curated entries with required fields", () => {
   assert.ok(
     beers.length >= 30 && beers.length <= 60,
@@ -173,6 +182,17 @@ test("index.html exposes cinematic hero, scene picks, and upgraded filter shell"
   assert.doesNotMatch(html, /hero-panel/);
 });
 
+test("index.html hero and catalogue sections expose cinematic structure", () => {
+  const html = fs.readFileSync(new URL("../index.html", import.meta.url), "utf8");
+
+  assert.match(html, /class="hero hero-stage"/);
+  assert.match(html, /data-scene-picks/);
+  assert.match(html, /id="scenes"/);
+  assert.match(html, /data-catalogue-status/);
+  assert.match(html, /data-filter-summary/);
+  assert.match(html, /data-scroll-target="scenes"/);
+});
+
 test("detail surface keeps modal entrypoints while using the new grouped detail layout", () => {
   const appSource = fs.readFileSync(new URL("../src/app.js", import.meta.url), "utf8");
   const stylesSource = fs.readFileSync(new URL("../styles.css", import.meta.url), "utf8");
@@ -193,30 +213,39 @@ test("detail surface keeps modal entrypoints while using the new grouped detail 
   assert.match(stylesSource, /\.detail-facts-primary \{/);
 });
 
-test("scene presets map to real filter values without fallback guessing", () => {
+test("scene presets are backed by real beers and real filters", () => {
   const presets = getScenePresets(beers);
+  const beerIds = new Set(beers.map((beer) => beer.id));
 
-  assert.equal(presets.length, 4);
-  assert.ok(presets.every((preset) => preset.filters.crowd || preset.filters.taste));
-  assert.ok(presets.every((preset) => preset.beerId));
+  assert.deepEqual(
+    presets.map((preset) => preset.id),
+    ["easy-drinking", "party-crate", "fruity-social", "ipa-upgrade"],
+  );
+  assert.ok(presets.every((preset) => beerIds.has(preset.beerId)));
+  assert.ok(
+    presets.every(
+      (preset) => filterBeers(beers, { ...DEFAULT_FILTERS, ...preset.filters }).length > 0,
+    ),
+  );
 });
 
-test("catalogue status copy reflects result count and active filters", () => {
-  const copy = summarizeCatalogueStatus(
+test("summarizeCatalogueStatus returns guide-like copy", () => {
+  assert.match(summarizeCatalogueStatus(DEFAULT_FILTERS, 12), /12/);
+
+  const filteredCopy = summarizeCatalogueStatus(
     {
+      ...DEFAULT_FILTERS,
       crowd: "入门友好",
       taste: "清爽",
-      country: "全部",
-      style: "全部",
-      priceBand: "全部",
-      search: "",
+      search: "白啤",
     },
-    3,
+    2,
   );
 
-  assert.match(copy, /3/);
-  assert.match(copy, /入门友好/);
-  assert.match(copy, /清爽/);
+  assert.match(filteredCopy, /2/);
+  assert.match(filteredCopy, /入门友好/);
+  assert.match(filteredCopy, /清爽/);
+  assert.match(filteredCopy, /白啤/);
 });
 
 test("vercel deployment declares the project root as the output directory", () => {
