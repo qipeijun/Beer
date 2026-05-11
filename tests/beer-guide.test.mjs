@@ -205,6 +205,17 @@ test("index.html hero and catalogue sections expose cinematic structure", () => 
   assert.match(html, /data-scroll-target="scenes"/);
 });
 
+test("styles define cinematic hero, scene cards, and upgraded catalogue chrome", () => {
+  const stylesSource = fs.readFileSync(new URL("../styles.css", import.meta.url), "utf8");
+
+  assert.match(stylesSource, /:root\s*\{[\s\S]*--bg:\s*#0/i);
+  assert.match(stylesSource, /\.hero-stage\b/);
+  assert.match(stylesSource, /\.hero-backdrop\b/);
+  assert.match(stylesSource, /\.scene-band\b/);
+  assert.match(stylesSource, /\.scene-card\b/);
+  assert.match(stylesSource, /\.catalogue-status\b/);
+});
+
 test("detail surface keeps modal entrypoints while using the new grouped detail layout", () => {
   const appSource = fs.readFileSync(new URL("../src/app.js", import.meta.url), "utf8");
   const stylesSource = fs.readFileSync(new URL("../styles.css", import.meta.url), "utf8");
