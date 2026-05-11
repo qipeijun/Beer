@@ -23,16 +23,17 @@
     </header>
 
     <main class="shell">
-      <section class="hero" aria-labelledby="hero-title">
-        <div class="hero-copy">
+      <section class="hero hero-stage" data-hero-stage aria-labelledby="hero-title">
+        <div class="hero-backdrop" aria-hidden="true"></div>
+        <div class="hero-content">
           <p class="eyebrow">Summer Beer Guide 2026</p>
-          <h1 id="hero-title">夏天想喝啤酒，先从适合自己开始。</h1>
-          <p class="lede">
-            这不是一张冷冰冰的品牌表，而是一份面向真实消费场景的选酒指南。先看你是谁、想喝什么口感、预算在哪个区间，再决定是清爽拉格、果香白啤，还是重口 IPA。
+          <h1 id="hero-title">先找到适合今晚的那一支。</h1>
+          <p class="hero-lede">
+            从清爽解暑到 IPA 进阶，用更像产品大片的方式，帮你更快选到值得开的那瓶酒。
           </p>
           <div class="hero-actions">
-            <a class="button" href="#catalogue">直接开始筛选</a>
-            <a class="button-secondary" href="#notes">先看夏日喝法</a>
+            <button class="button" type="button" data-scroll-target="catalogue">开始选酒</button>
+            <button class="button-secondary" type="button" data-scroll-target="scenes">按场景看推荐</button>
           </div>
           <div class="hero-stats" aria-label="数据概览">
             <div class="stat">
@@ -49,22 +50,20 @@
             </div>
           </div>
         </div>
-
-        <aside class="hero-panel" aria-label="快速推荐">
-          <div>
-            <h2>先按人群进入</h2>
-            <p>
-              如果你不想先研究风格术语，用人群入口会更快。页面会把适合入门、聚会、IPA 进阶和清爽党等不同偏好的选择先聚成四条捷径。
-            </p>
-          </div>
-          <div class="quick-picks" data-quick-picks></div>
-          <p data-summary>
-            从人群、口感、产地和价格带切入，快速找到适合夏天的那一杯。
-          </p>
-        </aside>
       </section>
 
       <p class="app-status" data-app-status role="status" hidden></p>
+
+      <section id="scenes" class="section scene-band" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">Scene Picks</p>
+          <h2>先按今晚的场景进。</h2>
+          <p class="section-copy">
+            不用先研究术语，直接从你现在想要的饮用氛围开始。
+          </p>
+        </div>
+        <div class="scene-picks" data-scene-picks></div>
+      </section>
 
       <section id="catalogue" class="section" data-reveal>
         <div class="feature-strip" data-editorials></div>
@@ -132,12 +131,17 @@
             <p class="section-copy">
               所有价格均为中国零售参考价，配料摘要用于快速辨识风格方向，购买前仍应以具体包装标注为准。
             </p>
+            <p data-filter-summary>
+              从人群、口感、产地和价格带切入，快速找到适合夏天的那一杯。
+            </p>
           </div>
           <div class="catalogue-meta">
             <strong data-count>0</strong>
             <span>个匹配结果</span>
           </div>
         </div>
+
+        <p class="catalogue-status" data-catalogue-status role="status"></p>
 
         <div class="guide-grid" data-results></div>
 

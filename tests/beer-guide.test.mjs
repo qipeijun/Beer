@@ -171,6 +171,18 @@ test("index.html boots with classic scripts so it can open directly from the fil
   assert.match(html, /data-detail-dialog/);
 });
 
+test("global bundle stays in sync with the filesystem entry DOM contract", () => {
+  const bundle = fs.readFileSync(new URL("../app.global.js", import.meta.url), "utf8");
+
+  assert.match(bundle, /document\.querySelector\("\[data-filter-summary\]"\)/);
+  assert.match(bundle, /document\.querySelector\("\[data-catalogue-status\]"\)/);
+  assert.match(bundle, /document\.querySelector\("\[data-scene-picks\]"\)/);
+  assert.match(bundle, /scenePresets:\s*getScenePresets\(beers\)/);
+  assert.match(bundle, /window\.BeerGuideApp = \{ initBeerGuide, bootBeerGuide \}/);
+  assert.doesNotMatch(bundle, /\[data-summary\]/);
+  assert.doesNotMatch(bundle, /\[data-quick-picks\]/);
+});
+
 test("index.html exposes cinematic hero, scene picks, and upgraded filter shell", () => {
   const html = fs.readFileSync(new URL("../index.html", import.meta.url), "utf8");
 

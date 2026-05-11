@@ -12,6 +12,49 @@ const DEFAULT_FILTERS = {
 
 const DEFAULT_SUMMARY = "从人群、口感、产地和价格带切入，快速找到适合夏天的那一杯。";
 
+const SCENE_PRESET_CONFIG = [
+  {
+    id: "easy-drinking",
+    title: "清爽解暑",
+    description: "先从干净、好入口的路线开始，适合今晚只想轻松开喝。",
+    beerId: "asahi-super-dry",
+    filters: {
+      crowd: "入门友好",
+      taste: "清爽",
+    },
+  },
+  {
+    id: "party-crate",
+    title: "朋友聚会",
+    description: "锁定好买、好拼单、开场不会出错的聚会型选择。",
+    beerId: "tsingtao-classic",
+    filters: {
+      crowd: "聚会囤货",
+      priceBand: "平价",
+    },
+  },
+  {
+    id: "fruity-social",
+    title: "果香轻松喝",
+    description: "给下午茶、露台和轻社交准备一组更友好的果香入口。",
+    beerId: "hoegaarden-white",
+    filters: {
+      crowd: "女生聚会",
+      taste: "果香",
+    },
+  },
+  {
+    id: "ipa-upgrade",
+    title: "IPA 进阶",
+    description: "已经不满足于基础清爽，就直接切进更明确的啤酒花表达。",
+    beerId: "goose-island-ipa",
+    filters: {
+      crowd: "IPA爱好者",
+      style: "IPA",
+    },
+  },
+];
+
 function derivePriceBand(priceCny) {
   if (priceCny <= 10) return "平价";
   if (priceCny <= 18) return "日常";
@@ -83,6 +126,91 @@ function summarizeSelection(filters = DEFAULT_FILTERS, defaultSummary = DEFAULT_
   }
 
   return segments.length ? `当前关注：${segments.join(" / ")}` : defaultSummary;
+}
+
+function getScenePresets(beers) {
+  const beerById = new Map(beers.map((beer) => [beer.id, beer]));
+
+  return SCENE_PRESET_CONFIG.map((preset) => {
+    const beer = beerById.get(preset.beerId);
+
+    if (!beer) {
+      throw new Error(`Scene preset "${preset.id}" references missing beer "${preset.beerId}".`);
+    }
+
+    return {
+      ...preset,
+      beer,
+    };
+  });
+}
+
+function summarizeCatalogueStatus(filters = DEFAULT_FILTERS, count, totalCount = null) {
+  const activeSegments = [];
+
+  if (filters.crowd !== "全部") activeSegments.push(filters.crowd);
+  if (filters.taste !== "全部") activeSegments.push(filters.taste);
+  if (filters.country !== "全部") activeSegments.push(filters.country);
+  if (filters.style !== "全部") activeSegments.push(filters.style);
+  if (filters.priceBand !== "全部") activeSegments.push(filters.priceBand);
+  if (filters.search?.trim()) activeSegments.push(`搜索“${filters.search.trim()}”`);
+
+  if (!count) {
+    return activeSegments.length
+      ? `按 ${activeSegments.join(" / ")} 这条线索暂时还没命中，放宽一个条件再看看。`
+      : "精选库暂时没有可展示结果，稍后再回来看看。";
+  }
+
+  if (!activeSegments.length) {
+    if (typeof totalCount === "number" && totalCount > count) {
+      return `从 ${totalCount} 支夏日啤酒里，先替你摊开这 ${count} 支值得先看的选择。`;
+    }
+
+    return `已展开 ${count} 支夏日啤酒，先从一个场景入口开始也很顺手。`;
+  }
+
+  return `根据 ${activeSegments.join(" / ")}，当前替你收拢出 ${count} 支值得先看的选择。`;
+}
+
+function isDefaultFilterValue(value) {
+  return !value || value === "全部";
+}
+
+function getActiveScenePresetId(presets, filters) {
+  return (
+    presets.find((preset) => {
+      const presetKeys = Object.keys(preset.filters);
+      const presetMatches = presetKeys.every((key) => filters[key] === preset.filters[key]);
+
+      if (!presetMatches) return false;
+
+      return ["crowd", "taste", "country", "style", "priceBand"].every((key) => {
+        if (presetKeys.includes(key)) return true;
+        return isDefaultFilterValue(filters[key]);
+      }) && !filters.search.trim();
+    })?.id ?? ""
+  );
+}
+
+function renderScenePicks(presets, activePresetId = "") {
+  return presets
+    .map((preset) => {
+      const isActive = preset.id === activePresetId;
+
+      return `
+        <button
+          class="quick-pick ${isActive ? "is-active" : ""}"
+          type="button"
+          data-scene-preset="${escapeHtml(preset.id)}"
+          aria-pressed="${isActive}"
+        >
+          <img src="${escapeHtml(preset.beer.image)}" alt="${escapeHtml(`${preset.beer.brand} ${preset.beer.name}`)}" loading="lazy" decoding="async" />
+          <strong>${escapeHtml(preset.title)}</strong>
+          <span>${escapeHtml(preset.description)}</span>
+        </button>
+      `;
+    })
+    .join("");
 }
 
 function pickActiveBeer(results, currentId) {
@@ -361,7 +489,13 @@ function updateView(beers, filters, state, nodes, meta = {}, options = {}) {
 
   nodes.count.textContent = `${results.length}`;
   if (nodes.mobileCount) nodes.mobileCount.textContent = `${results.length}`;
-  nodes.summary.textContent = summarizeSelection(filters, meta.defaultSummary ?? DEFAULT_SUMMARY);
+  nodes.filterSummary.textContent = summarizeSelection(filters, meta.defaultSummary ?? DEFAULT_SUMMARY);
+  nodes.catalogueStatus.textContent = summarizeCatalogueStatus(filters, results.length, beers.length);
+
+  if (nodes.scenePicks) {
+    const activePresetId = getActiveScenePresetId(state.scenePresets, filters);
+    nodes.scenePicks.innerHTML = renderScenePicks(state.scenePresets, activePresetId);
+  }
 
   const renderGrid = () => {
     const animate = !state.rendered && !options.disableGridAnimation;
@@ -463,8 +597,9 @@ function initBeerGuide(config) {
   const grid = document.querySelector("[data-results]");
   const detail = document.querySelector("[data-detail]");
   const count = document.querySelector("[data-count]");
-  const summary = document.querySelector("[data-summary]");
-  const quickPicks = document.querySelector("[data-quick-picks]");
+  const filterSummary = document.querySelector("[data-filter-summary]");
+  const catalogueStatus = document.querySelector("[data-catalogue-status]");
+  const scenePicks = document.querySelector("[data-scene-picks]");
   const editorials = document.querySelector("[data-editorials]");
   const reset = document.querySelector("[data-reset]");
   const total = document.querySelector("[data-total-count]");
@@ -475,8 +610,20 @@ function initBeerGuide(config) {
   const detailDialog = document.querySelector("[data-detail-dialog]");
   const detailClose = document.querySelector("[data-detail-close]");
   const statusNode = document.querySelector("[data-app-status]");
+  const scrollTriggers = document.querySelectorAll("[data-scroll-target]");
 
-  if (!form || !grid || !detail || !count || !summary || !quickPicks || !editorials || !reset || !detailDialog) {
+  if (
+    !form ||
+    !grid ||
+    !detail ||
+    !count ||
+    !filterSummary ||
+    !catalogueStatus ||
+    !scenePicks ||
+    !editorials ||
+    !reset ||
+    !detailDialog
+  ) {
     return false;
   }
 
@@ -488,7 +635,6 @@ function initBeerGuide(config) {
   hideStatus(statusNode);
   renderInfoSections(sections);
   populateFilters(beers, form);
-  quickPicks.innerHTML = renderHighlights(beers);
   editorials.innerHTML = renderEditorials(beers);
 
   if (total) total.textContent = `${beers.length}`;
@@ -504,6 +650,7 @@ function initBeerGuide(config) {
     activeId: beers[0]?.id ?? null,
     rendered: false,
     isDetailOpen: false,
+    scenePresets: getScenePresets(beers),
     lastTrigger: null,
     detailTransitionState: "closed",
     detailCloseTimer: null,
@@ -511,7 +658,31 @@ function initBeerGuide(config) {
   };
 
   const applyFilters = (options = {}) =>
-    updateView(beers, readFilters(form), state, { grid, detail, count, summary, mobileCount }, meta, options);
+    updateView(
+      beers,
+      readFilters(form),
+      state,
+      { grid, detail, count, filterSummary, catalogueStatus, scenePicks, mobileCount },
+      meta,
+      options,
+    );
+
+  const applyScenePreset = (presetId) => {
+    const preset = state.scenePresets.find((item) => item.id === presetId);
+
+    if (!preset) return;
+
+    form.reset();
+    form.elements.crowd.value = preset.filters.crowd ?? "全部";
+    form.elements.taste.value = preset.filters.taste ?? "全部";
+    form.elements.country.value = preset.filters.country ?? "全部";
+    form.elements.style.value = preset.filters.style ?? "全部";
+    form.elements.priceBand.value = preset.filters.priceBand ?? "全部";
+    form.elements.search.value = "";
+    state.activeId = preset.beerId;
+    applyFilters();
+    document.querySelector("#catalogue")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   const setDetailTransitionState = (value) => {
     state.detailTransitionState = value;
@@ -590,13 +761,11 @@ function initBeerGuide(config) {
     state.activeId = beers[0]?.id ?? null;
     applyFilters();
   });
-  quickPicks.addEventListener("click", (event) => {
-    const trigger = event.target.closest("[data-crowd]");
+  scenePicks.addEventListener("click", (event) => {
+    const trigger = event.target.closest("[data-scene-preset]");
     if (!trigger) return;
 
-    form.elements.crowd.value = trigger.dataset.crowd;
-    applyFilters();
-    document.querySelector("#catalogue")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    applyScenePreset(trigger.dataset.scenePreset);
   });
   grid.addEventListener("click", (event) => {
     const card = event.target.closest("[data-beer-id]");
@@ -639,6 +808,14 @@ function initBeerGuide(config) {
       }
     });
   }
+
+  scrollTriggers.forEach((trigger) => {
+    trigger.addEventListener("click", () => {
+      const targetId = trigger.dataset.scrollTarget;
+      if (!targetId) return;
+      document.querySelector(`#${targetId}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
 
   const revealSections = document.querySelectorAll("[data-reveal]");
   if (revealSections.length) {
