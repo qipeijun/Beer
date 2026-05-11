@@ -11,6 +11,7 @@ import {
   summarizeSelection,
   summarizeCatalogueStatus,
   getScenePresets,
+  getCardAnimationDelay,
 } from "../src/app.js";
 
 const DEFAULT_FILTERS = {
@@ -143,6 +144,14 @@ test("pickActiveBeer preserves selection when possible and falls back to first r
   assert.equal(pickActiveBeer([], second.id), null);
 });
 
+test("card animation delay is capped so deep lists do not stay visually blank", () => {
+  assert.equal(getCardAnimationDelay(0), "0ms");
+  assert.equal(getCardAnimationDelay(3), "150ms");
+  assert.equal(getCardAnimationDelay(5), "250ms");
+  assert.equal(getCardAnimationDelay(10), "250ms");
+  assert.equal(getCardAnimationDelay(36), "250ms");
+});
+
 test("content sections are data-driven and credits links are structured", () => {
   assert.equal(pageSections.length, 3);
   assert.deepEqual(
@@ -183,56 +192,45 @@ test("global bundle stays in sync with the filesystem entry DOM contract", () =>
   assert.doesNotMatch(bundle, /\[data-quick-picks\]/);
 });
 
-test("index.html exposes cinematic hero, scene picks, and upgraded filter shell", () => {
+test("index.html exposes apple-style hero and decision-layer anchors", () => {
   const html = fs.readFileSync(new URL("../index.html", import.meta.url), "utf8");
 
   assert.match(html, /data-hero-stage/);
+  assert.match(html, /Scene Picks/);
+  assert.match(html, /Decision Layer/);
+  assert.match(html, /Curated Catalogue/);
   assert.match(html, /data-scene-picks/);
-  assert.match(html, /data-scroll-target="catalogue"/);
   assert.match(html, /data-filter-summary/);
   assert.match(html, /data-catalogue-status/);
-  assert.doesNotMatch(html, /hero-panel/);
 });
 
-test("index.html hero and catalogue sections expose cinematic structure", () => {
+test("index.html contains product-page style section copy", () => {
   const html = fs.readFileSync(new URL("../index.html", import.meta.url), "utf8");
 
-  assert.match(html, /class="hero hero-stage"/);
-  assert.match(html, /data-scene-picks/);
-  assert.match(html, /id="scenes"/);
-  assert.match(html, /data-catalogue-status/);
-  assert.match(html, /data-filter-summary/);
-  assert.match(html, /data-scroll-target="scenes"/);
+  assert.match(html, /Summer Beer Guide 2026/);
+  assert.match(html, /先找到适合今晚的那一支/);
+  assert.match(html, /按你真正会用的维度筛/);
+  assert.match(html, /从清爽解暑到 IPA 进阶，用更像产品页的方式/);
 });
 
-test("styles define cinematic hero, scene cards, and upgraded catalogue chrome", () => {
+test("styles define light premium palette and product-page layout hooks", () => {
   const stylesSource = fs.readFileSync(new URL("../styles.css", import.meta.url), "utf8");
 
-  assert.match(stylesSource, /:root\s*\{[\s\S]*--bg:\s*#0/i);
+  assert.match(stylesSource, /--bg:\s*#f4f1ea/i);
+  assert.match(stylesSource, /--ink:\s*#101114/i);
   assert.match(stylesSource, /\.hero-stage\b/);
-  assert.match(stylesSource, /\.hero-backdrop\b/);
-  assert.match(stylesSource, /\.scene-band\b/);
-  assert.match(stylesSource, /\.scene-card\b/);
-  assert.match(stylesSource, /\.catalogue-status\b/);
+  assert.match(stylesSource, /\.scene-picks\b/);
+  assert.match(stylesSource, /\.catalogue-head\b/);
+  assert.match(stylesSource, /\.filters-header\b/);
 });
 
-test("styles keep premium desktop flow and mobile ergonomics aligned", () => {
+test("styles keep product-page layout responsive", () => {
   const stylesSource = fs.readFileSync(new URL("../styles.css", import.meta.url), "utf8");
 
-  assert.match(stylesSource, /\.section\[data-section\]\s*\{/);
-  assert.match(stylesSource, /\.section\[data-section\]\s+\.note-card\b/);
-  assert.match(
-    stylesSource,
-    /@media \(max-width: 720px\)[\s\S]*\.scene-picks\s*\{[\s\S]*grid-auto-flow:\s*column/i,
-  );
-  assert.match(
-    stylesSource,
-    /@media \(max-width: 720px\)[\s\S]*\.hero-actions\s*\{[\s\S]*grid-template-columns:\s*1fr/i,
-  );
-  assert.match(
-    stylesSource,
-    /@media \(max-width: 720px\)[\s\S]*\.filter-toggle\s*\{[\s\S]*bottom:\s*max\(/i,
-  );
+  assert.match(stylesSource, /@media \(max-width: 980px\)/);
+  assert.match(stylesSource, /@media \(max-width: 720px\)/);
+  assert.match(stylesSource, /\.filter-toggle/);
+  assert.match(stylesSource, /\.hero-stats/);
 });
 
 test("detail surface keeps modal entrypoints while using the new grouped detail layout", () => {
@@ -255,7 +253,7 @@ test("detail surface keeps modal entrypoints while using the new grouped detail 
   assert.match(stylesSource, /\.detail-facts-primary \{/);
 });
 
-test("detail and catalogue source keep cinematic interaction hooks", () => {
+test("detail and catalogue source keep product-guide interaction hooks", () => {
   const appSource = fs.readFileSync(new URL("../src/app.js", import.meta.url), "utf8");
   const stylesSource = fs.readFileSync(new URL("../styles.css", import.meta.url), "utf8");
 
@@ -267,6 +265,13 @@ test("detail and catalogue source keep cinematic interaction hooks", () => {
   assert.match(appSource, /catalogueStatus\.textContent = summarizeCatalogueStatus/);
   assert.match(appSource, /trigger\.dataset\.scenePreset/);
   assert.match(appSource, /detailDialog\.dataset\.state = value/);
+  assert.match(appSource, /card-image-wrap--generated/);
+  assert.match(appSource, /detail-media-frame--generated/);
+  assert.match(appSource, /quick-pick--generated/);
+  assert.doesNotMatch(appSource, /nodes\.grid\.classList\.add\("is-updating"\)/);
+  assert.doesNotMatch(appSource, /nodes\.detail\.classList\.add\("is-updating"\)/);
+  assert.doesNotMatch(appSource, /setTimeout\(\(\) => \{\s*renderGrid\(\)/);
+  assert.doesNotMatch(appSource, /setTimeout\(\(\) => \{\s*renderDetail\(\)/);
 
   assert.match(stylesSource, /\.beer-card:hover/);
   assert.match(stylesSource, /\.section\[data-reveal\]\.is-visible/);
@@ -275,6 +280,9 @@ test("detail and catalogue source keep cinematic interaction hooks", () => {
   assert.match(stylesSource, /\.beer-card\.is-pressed/);
   assert.match(stylesSource, /\.detail-dialog\[data-state="opening"\]/);
   assert.match(stylesSource, /\.detail-dialog\[data-state="closing"\]/);
+  assert.match(stylesSource, /\.card-image-wrap--generated/);
+  assert.match(stylesSource, /\.detail-media-frame--generated/);
+  assert.match(stylesSource, /\.quick-pick--generated/);
 });
 
 test("scene presets are backed by real beers and real filters", () => {
@@ -293,23 +301,32 @@ test("scene presets are backed by real beers and real filters", () => {
   );
 });
 
-test("summarizeCatalogueStatus returns guide-like copy", () => {
-  assert.match(summarizeCatalogueStatus(DEFAULT_FILTERS, 12), /12/);
+test("scene preset copy stays concise and product-like", () => {
+  const presets = getScenePresets(beers);
 
-  const filteredCopy = summarizeCatalogueStatus(
+  assert.equal(presets[0].title, "清爽解暑");
+  assert.match(presets[0].description, /轻松|入口|开喝/);
+  assert.match(presets[3].description, /啤酒花|表达|进阶/);
+});
+
+test("summarizeSelection and status copy stay concise", () => {
+  const summary = summarizeSelection(
     {
-      ...DEFAULT_FILTERS,
       crowd: "入门友好",
       taste: "清爽",
-      search: "白啤",
-    },
-    2,
+      country: "全部",
+      style: "全部",
+      priceBand: "全部",
+      search: "",
+    }
   );
 
-  assert.match(filteredCopy, /2/);
-  assert.match(filteredCopy, /入门友好/);
-  assert.match(filteredCopy, /清爽/);
-  assert.match(filteredCopy, /白啤/);
+  assert.match(summary, /当前关注：入门友好 \/ 清爽/);
+
+  assert.match(
+    summarizeCatalogueStatus(DEFAULT_FILTERS, 12, beers.length),
+    /值得先看|先从一个场景入口开始/,
+  );
 });
 
 test("vercel deployment declares the project root as the output directory", () => {

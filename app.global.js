@@ -196,10 +196,11 @@ function renderScenePicks(presets, activePresetId = "") {
   return presets
     .map((preset) => {
       const isActive = preset.id === activePresetId;
+      const imageToneClass = preset.beer.imageKind === "generated" ? "quick-pick--generated" : "quick-pick--real";
 
       return `
         <button
-          class="quick-pick ${isActive ? "is-active" : ""}"
+          class="quick-pick ${imageToneClass} ${isActive ? "is-active" : ""}"
           type="button"
           data-scene-preset="${escapeHtml(preset.id)}"
           aria-pressed="${isActive}"
@@ -249,15 +250,21 @@ function escapeHtml(value) {
     .replaceAll('"', "&quot;");
 }
 
+function getCardAnimationDelay(index = 0) {
+  const safeIndex = Number.isFinite(index) ? Math.max(index, 0) : 0;
+  return `${Math.min(safeIndex, 5) * 50}ms`;
+}
+
 function renderBeerCard(beer, isActive, index, animate) {
   const priceBand = derivePriceBand(beer.priceCny);
   const tags = beer.highlightTags.slice(0, 3);
   const imageBadge = beer.imageKind === "real" ? "真实图" : "生成图";
-  const animAttr = animate ? ` data-animate style="animation-delay: ${(index || 0) * 50}ms"` : "";
+  const animAttr = animate ? ` data-animate style="animation-delay: ${getCardAnimationDelay(index || 0)}"` : "";
+  const imageToneClass = beer.imageKind === "generated" ? "card-image-wrap--generated" : "card-image-wrap--real";
 
   return `
     <article class="beer-card ${isActive ? "is-active" : ""}" data-beer-id="${escapeHtml(beer.id)}" tabindex="0" role="button" aria-pressed="${isActive}"${animAttr}>
-      <div class="card-image-wrap">
+      <div class="card-image-wrap ${imageToneClass}">
         <img class="card-image" src="${escapeHtml(beer.image)}" alt="${escapeHtml(`${beer.brand} ${beer.name}`)}" loading="lazy" decoding="async" />
         <span class="image-badge">${escapeHtml(imageBadge)}</span>
       </div>
@@ -311,11 +318,12 @@ function renderBeerDetail(beer) {
       </div>
     `
     : "";
+  const detailMediaToneClass = beer.imageKind === "generated" ? "detail-media-frame--generated" : "detail-media-frame--real";
 
   return `
     <article class="detail-card">
       <div class="detail-media">
-        <div class="detail-media-frame">
+        <div class="detail-media-frame ${detailMediaToneClass}">
           <img class="detail-image" src="${escapeHtml(beer.image)}" alt="${escapeHtml(`${beer.brand} ${beer.name}`)}" decoding="async" />
         </div>
         ${gallery ? `<section class="detail-gallery-section" aria-label="场景补图"><p class="detail-kicker">Scene Notes</p>${gallery}</section>` : ""}
@@ -522,29 +530,8 @@ function updateView(beers, filters, state, nodes, meta = {}, options = {}) {
       `;
   };
 
-  if (options.instant || options.disableGridAnimation || state.isDetailOpen) {
-    renderGrid();
-  } else {
-    nodes.grid.classList.add("is-updating");
-    requestAnimationFrame(() => {
-      setTimeout(() => {
-        renderGrid();
-        nodes.grid.classList.remove("is-updating");
-      }, 100);
-    });
-  }
-
-  if (options.instantDetail) {
-    renderDetail();
-  } else {
-    nodes.detail.classList.add("is-updating");
-    requestAnimationFrame(() => {
-      setTimeout(() => {
-        renderDetail();
-        nodes.detail.classList.remove("is-updating");
-      }, 100);
-    });
-  }
+  renderGrid();
+  renderDetail();
 }
 
 function normalizeConfig(config) {
